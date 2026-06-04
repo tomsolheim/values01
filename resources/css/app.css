@@ -1,0 +1,11 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+    --app-bg: #f6f7f9;
+    --app-ink: #17202a;
+}
+
+body {
+    background: var(--app-bg);
+    color: var(--app-ink);
+}
