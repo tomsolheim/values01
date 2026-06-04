@@ -2,17 +2,21 @@
 
 ## Purpose
 
-Describe the product's reason for existing.
+The project values01 will be a simple portefolio management system. the main infomation source will be data from Nordnet. It will be possible to add and or correct data manually.
 
 ## Users
 
-- Primary user:
-- Secondary users:
+- This is a single user system
+
 
 ## Outcomes
 
-- Outcome 1:
-- Outcome 2:
+- Overview of portfolio
+- Status of asset bundles
+- Status of individual assets
+- History of holdings of individual assets
+- Annual and monthly profit and loss
+ 
 
 ## Constraints
 
@@ -24,3 +28,6 @@ Describe the product's reason for existing.
 ## Domain Language
 
 Define important project terms here so specs, code, and UI use the same vocabulary.
+
+Asset:  Shares, bank account deposites
+Cost:   Transaction cost 
