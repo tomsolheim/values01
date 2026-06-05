@@ -8,6 +8,8 @@
 - Numeric fields allow decimal values.
 - `tab06` in the workbench shows the history list widget.
 - The history list shows the columns `isin`, `tic`, `date`, `type`, `count`, `price`, `rate`, `value`, `cost`, `acc`, and `total`.
+- The history list has a search field.
+- The history list is paginated.
 - The history widget includes a selector with `Ticker` and `ISIN` options.
 - Selecting `Ticker` filters the list by `tic`.
 - Selecting `ISIN` filters the list by `isin`.

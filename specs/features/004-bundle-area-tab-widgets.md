@@ -65,6 +65,15 @@ Fields:
 
 The Bundle widget includes a form and list.
 
+The widget heading includes a show/hide button for the form.
+
+Expected behavior:
+
+- The button toggles the form visibility.
+- The list remains visible when the form is hidden.
+- The show/hide behavior affects only the form area.
+- The button label should clearly indicate the next action, such as `Show form` or `Hide form`.
+
 Form fields:
 
 | Label | Field | Control | Values / Source |
@@ -77,15 +86,29 @@ List columns:
 - `name`
 - `comment`
 
+The list uses pagination.
+The list includes a search field.
+
 Expected row actions:
 
 - Edit
 - Delete
+
+Row action presentation follows `specs/features/008-shared-crud-list-behavior.md`.
 
 ## Area Widget
 
 The Area widget includes a form and list.
 
+The widget heading includes a show/hide button for the form.
+
+Expected behavior:
+
+- The button toggles the form visibility.
+- The list remains visible when the form is hidden.
+- The show/hide behavior affects only the form area.
+- The button label should clearly indicate the next action, such as `Show form` or `Hide form`.
+
 Form fields:
 
 | Label | Field | Control | Values / Source |
@@ -98,10 +121,15 @@ List columns:
 - `name`
 - `comment`
 
+The list uses pagination.
+The list includes a search field.
+
 Expected row actions:
 
 - Edit
 - Delete
+
+Row action presentation follows `specs/features/008-shared-crud-list-behavior.md`.
 
 ## Relationship to Assets
 
@@ -119,6 +147,10 @@ Included:
 - Bundle form/list widget in `tab03`
 - Area form/list widget in `tab04`
 - Dropdown source relationship for the Asset widget in `tab02`
+- Pagination for Bundle and Area lists
+- Search fields for Bundle and Area lists
+- Show/hide form buttons in the widget headings
+- Shared CRUD list behavior from `008-shared-crud-list-behavior`
 
 Not included:
 

@@ -86,6 +86,8 @@ Expected behavior:
 ### List
 
 The widget includes a list or table of history rows.
+The list uses pagination.
+The list includes a search field.
 
 Visible columns:
 
@@ -115,6 +117,8 @@ Included:
 - Field labels and purposes
 - History list widget in `tab06`
 - Selector for filtering by ticker or ISIN
+- Pagination for the history list
+- Search field for the history list
 
 Not included:
 
@@ -123,7 +127,6 @@ Not included:
 - Calculation formulas
 - Sorting rules
 - Export
-- Pagination
 
 ## Open Questions
 

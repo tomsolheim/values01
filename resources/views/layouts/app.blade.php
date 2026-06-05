@@ -10,6 +10,7 @@
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         @else
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
         @endif
         @livewireStyles
     </head>
@@ -22,7 +23,7 @@
             </div>
         </nav>
 
-        <main class="container py-5">
+        <main class="container py-3">
             {{ $slot ?? '' }}
             @yield('content')
         </main>
@@ -32,5 +33,7 @@
         @unless (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
         @endunless
+
+        @stack('tab-persistence')
     </body>
 </html>

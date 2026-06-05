@@ -1,21 +1,133 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="bg-white border rounded-2 p-4 p-md-5">
-                <p class="text-uppercase text-secondary small fw-semibold mb-2">Spec-driven Laravel foundation</p>
-                <h1 class="h2 mb-3">{{ config('app.name', 'Values01') }}</h1>
-                <p class="lead mb-4">
-                    Laravel 13, Livewire 4, and Bootstrap 5 are ready for feature specs, acceptance criteria, and implementation.
-                </p>
-                <div class="d-flex flex-wrap gap-2">
-                    <span class="badge text-bg-primary">Laravel 13</span>
-                    <span class="badge text-bg-success">Livewire 4</span>
-                    <span class="badge text-bg-dark">Bootstrap 5</span>
-                    <span class="badge text-bg-secondary">Specs first</span>
+
+    <div class="row g-3 mb-3 align-items-stretch" data-top-area>
+        <div class="col-12 col-md-4" data-top-position="left">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title text-secondary">top01</h6>
+                    <p class="card-text small text-muted">Placeholder card</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8" data-top-position="right">
+            <div class="row g-3 justify-content-end h-100" data-top-right-group>
+                <div class="col-12 col-md-6 ms-md-auto" data-card-toggle="top08">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h6 class="card-title text-secondary">top08</h6>
+                            <p class="card-text small text-muted">Placeholder card</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6" data-card-toggle="top09">
+                    <livewire:instance-info />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-12 col-md-3">
+            <livewire:card-selector />
+            <div class="card" data-card-toggle="side02">
+                <div class="card-body">
+                    <h6 class="card-title text-secondary">side02</h6>
+                    <p class="card-text small text-muted">Placeholder card</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-9" data-card-toggle="workbench">
+            <ul class="nav nav-tabs" id="workbenchTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab01-tab" data-bs-toggle="tab" data-bs-target="#tab01" type="button" role="tab">tab01</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab02-tab" data-bs-toggle="tab" data-bs-target="#tab02" type="button" role="tab">Assets</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab03-tab" data-bs-toggle="tab" data-bs-target="#tab03" type="button" role="tab">Bundles</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab04-tab" data-bs-toggle="tab" data-bs-target="#tab04" type="button" role="tab">Areas</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab05-tab" data-bs-toggle="tab" data-bs-target="#tab05" type="button" role="tab">Holdings</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab06-tab" data-bs-toggle="tab" data-bs-target="#tab06" type="button" role="tab">History</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab07-tab" data-bs-toggle="tab" data-bs-target="#tab07" type="button" role="tab">tab07</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab08-tab" data-bs-toggle="tab" data-bs-target="#tab08" type="button" role="tab">tab08</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab09-tab" data-bs-toggle="tab" data-bs-target="#tab09" type="button" role="tab">tab09</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab10-tab" data-bs-toggle="tab" data-bs-target="#tab10" type="button" role="tab">tab10</button>
+                </li>
+            </ul>
+
+            <div class="tab-content border border-top-0 rounded-bottom p-3 bg-white" id="workbenchTabContent">
+                <div class="tab-pane fade show active" id="tab01" role="tabpanel">
+                    <p class="text-muted small mb-0">info01</p>
+                </div>
+                <div class="tab-pane fade" id="tab02" role="tabpanel">
+                    <livewire:asset-widget />
+                </div>
+                <div class="tab-pane fade" id="tab03" role="tabpanel">
+                    <livewire:bundle-widget />
+                </div>
+                <div class="tab-pane fade" id="tab04" role="tabpanel">
+                    <livewire:area-widget />
+                </div>
+                <div class="tab-pane fade" id="tab05" role="tabpanel">
+                    <p class="text-muted small mb-0">info05</p>
+                </div>
+                <div class="tab-pane fade" id="tab06" role="tabpanel">
+                    <p class="text-muted small mb-0">info06</p>
+                </div>
+                <div class="tab-pane fade" id="tab07" role="tabpanel">
+                    <p class="text-muted small mb-0">info07</p>
+                </div>
+                <div class="tab-pane fade" id="tab08" role="tabpanel">
+                    <p class="text-muted small mb-0">info08</p>
+                </div>
+                <div class="tab-pane fade" id="tab09" role="tabpanel">
+                    <p class="text-muted small mb-0">info09</p>
+                </div>
+                <div class="tab-pane fade" id="tab10" role="tabpanel">
+                    <p class="text-muted small mb-0">info10</p>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('tab-persistence')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var triggerEl = document.querySelector('#workbenchTabs .nav-link.active');
+    var hash = window.location.hash;
+
+    if (hash && document.querySelector('[data-bs-target="' + hash + '"]')) {
+        triggerEl = document.querySelector('[data-bs-target="' + hash + '"]');
+    }
+
+    if (triggerEl) {
+        bootstrap.Tab.getOrCreateInstance(triggerEl).show();
+    }
+
+    document.querySelectorAll('#workbenchTabs [data-bs-toggle="tab"]').forEach(function (tab) {
+        tab.addEventListener('shown.bs.tab', function (e) {
+            history.replaceState(null, '', e.target.getAttribute('data-bs-target'));
+        });
+    });
+});
+</script>
+@endpush

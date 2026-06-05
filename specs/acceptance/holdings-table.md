@@ -12,12 +12,18 @@
 - `profit` stores profit in NOK.
 - `profit_percent` stores profit percentage.
 - `tab05` in the workbench shows the holdings form/list widget.
+- The holdings widget heading includes a show/hide button for the form.
+- The holdings list remains visible when the form is hidden.
+- The holdings widget show/hide button affects only the form area.
 - The holdings form uses the labels `Tic`, `GAV`, `Count`, `Cost`, `PValue`, `Price`, `Rate`, `Value`, `Profit`, and `Profit %`.
 - The holdings widget can create a holding.
 - The holdings widget can list existing holdings.
 - The holdings widget can edit an existing holding.
 - The holdings widget can delete an existing holding.
+- The holdings list follows the shared CRUD list behavior.
 - The holdings list shows the columns `ticker`, `gav`, `count`, `cost`, `pvalue`, `price`, `erate`, `value`, `profit`, and `profit_percent`.
+- The holdings list has a search field.
+- The holdings list is paginated.
 
 ## Suggested Tests
 

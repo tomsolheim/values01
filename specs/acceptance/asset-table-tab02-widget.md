@@ -12,6 +12,9 @@
 - `bundle_id` references the `bundles` table.
 - `area_id` references the `areas` table.
 - `tab02` in the workbench shows the asset form/list widget.
+- The asset widget heading includes a show/hide button for the form.
+- The asset widget list remains visible when the form is hidden.
+- The asset widget show/hide button affects only the form area.
 - The asset form uses the label `Type` for `type`.
 - The asset form uses the label `ISIN` for `isin`.
 - The asset form uses the label `Tic` for `ticker`.
@@ -29,8 +32,11 @@
 - The widget can list existing assets.
 - The widget can edit an existing asset.
 - The widget can delete an existing asset.
+- The asset list follows the shared CRUD list behavior.
 - The asset list shows the columns `type`, `isin`, `ticker`, `country`, `name`, `bundle`, `area`, and `comment`.
 - The asset list displays bundle and area names rather than raw ids.
+- The asset list has a search field.
+- The asset list is paginated.
 
 ## Suggested Tests
 

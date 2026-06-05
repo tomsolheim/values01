@@ -12,14 +12,26 @@
 - `comment` is optional for areas.
 - `tab03` shows the Bundle form/list widget.
 - `tab04` shows the Area form/list widget.
+- The Bundle widget heading includes a show/hide button for the form.
+- The Area widget heading includes a show/hide button for the form.
+- The Bundle list remains visible when the form is hidden.
+- The Area list remains visible when the form is hidden.
+- The Bundle widget show/hide button affects only the form area.
+- The Area widget show/hide button affects only the form area.
 - The Bundle widget can create a bundle.
 - The Bundle widget can list existing bundles.
 - The Bundle widget can edit an existing bundle.
 - The Bundle widget can delete a bundle.
+- The Bundle list follows the shared CRUD list behavior.
 - The Area widget can create an area.
 - The Area widget can list existing areas.
 - The Area widget can edit an existing area.
 - The Area widget can delete an area.
+- The Area list follows the shared CRUD list behavior.
+- The Bundle list is paginated.
+- The Area list is paginated.
+- The Bundle list has a search field.
+- The Area list has a search field.
 - The Asset form Bundle dropdown is populated from `bundles.name`.
 - The Asset form Area dropdown is populated from `areas.name`.
 

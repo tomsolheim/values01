@@ -83,6 +83,17 @@ In the first implementation step:
 
 ## Widget Behavior
 
+### Heading
+
+The widget heading includes a show/hide button for the form.
+
+Expected behavior:
+
+- The button toggles the form visibility.
+- The list remains visible when the form is hidden.
+- The show/hide behavior affects only the form area.
+- The button label should clearly indicate the next action, such as `Show form` or `Hide form`.
+
 ### Form
 
 The widget includes a form for creating or editing a holding.
@@ -110,6 +121,8 @@ Expected controls:
 ### List
 
 The widget includes a list or table of existing holdings.
+The list uses pagination.
+The list includes a search field.
 
 Visible columns:
 
@@ -129,6 +142,8 @@ Expected row actions:
 - Edit
 - Delete
 
+Row action presentation follows `specs/features/008-shared-crud-list-behavior.md`.
+
 ## Scope
 
 Included:
@@ -138,6 +153,10 @@ Included:
 - Basic validation expectations
 - Naming resolution for `profit_percent`
 - Holdings form/list widget in `tab05`
+- Pagination for the holdings list
+- Search field for the holdings list
+- Show/hide form button in the widget heading
+- Shared CRUD list behavior from `008-shared-crud-list-behavior`
 
 Not included:
 
