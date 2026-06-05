@@ -60,9 +60,20 @@ Fields:
 - Purpose: number of host CPU cores reserved for VMware or other VM workloads.
 - Used by System Status to calculate available CPU count.
 
+`isin_counter`
+
+- Group: `lookup`
+- Purpose: remaining daily ISIN lookup count for the EODHD license quota.
+- Initial value: `20`
+- Used by Asset ISIN Lookup before calling the external provider.
+- The value is decremented by `1` for each external ISIN lookup call.
+- When the value reaches `0`, Asset ISIN Lookup must not call the external provider.
+- Daily reset behavior is TBS and may be handled manually through the Variables CRUD widget until specified.
+
 ## Relationship to Widgets
 
 - System Status reads variables from the `variables` table.
+- Asset ISIN Lookup reads and updates `isin_counter` from the `variables` table.
 - Other widgets may use variables later if specified.
 
 ## UI Placement

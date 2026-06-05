@@ -33,6 +33,11 @@
 - The ISIN lookup button uses the current `isin` field value.
 - The ISIN lookup action does not save the asset by itself.
 - The user must still press Save/Create to persist lookup-filled data.
+- The ISIN lookup checks `isin_counter` in the `variables` table before calling the external provider.
+- Each external ISIN lookup decrements `isin_counter` by `1`.
+- When `isin_counter` is `0`, the ISIN lookup does not call the external provider.
+- When `isin_counter` is `0`, the UI shows a popup-message with the exact text `todays lookup quota is used`.
+- If `isin_counter` is missing or invalid, the lookup shows a configuration-needed message and does not call the external provider.
 - The ISIN lookup can fill or suggest `ticker`, `country`, `name`, `type`, and `area_id`.
 - The ISIN lookup does not silently overwrite existing manually entered values.
 - The ISIN lookup prefers a primary provider result when multiple listings are returned.
@@ -40,6 +45,10 @@
 - If no lookup result is found, the widget shows a clear message and leaves the form unchanged.
 - Lookup errors are visible inside the widget and do not break the page.
 - API credentials are read from environment/config and are not stored in source code.
+- `.env.example` includes an empty `EODHD_API_TOKEN=` placeholder.
+- Project setup notes explain how to configure the EODHD token in `.env`.
+- Project setup notes mention clearing config or restarting the app after token changes.
+- Real API tokens are not committed to Git.
 - If no API token is configured, the lookup action is disabled or shows a clear configuration-needed message.
 - The widget can list existing assets.
 - The widget can edit an existing asset.
@@ -59,5 +68,8 @@
 - A feature or Livewire test confirms ISIN lookup fills suggested form fields without saving the asset.
 - A feature or Livewire test confirms ISIN lookup does not silently overwrite manually entered form values.
 - A feature or Livewire test confirms missing API configuration is handled clearly.
+- A feature or Livewire test confirms ISIN lookup decrements `isin_counter` for external provider calls.
+- A feature or Livewire test confirms ISIN lookup is blocked when `isin_counter` is `0`.
+- A browser or Livewire test confirms the quota-used popup text is `todays lookup quota is used`.
 - A feature or Livewire test confirms an asset can be updated.
 - A feature or Livewire test confirms an asset can be deleted.

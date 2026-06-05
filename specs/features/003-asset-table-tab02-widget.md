@@ -165,6 +165,12 @@ Expected behavior:
 
 - The lookup uses the current `isin` field value.
 - The lookup does not save the asset by itself.
+- Before calling the external lookup provider, the lookup checks the `isin_counter` variable in the `variables` table.
+- The `isin_counter` value represents the remaining daily ISIN lookups allowed by the current license.
+- Every provider lookup attempt counts down `isin_counter` by `1`.
+- The counter is decremented only when the application is about to call the external provider.
+- If `isin_counter` is `0`, the application must not call the external provider.
+- If `isin_counter` is `0`, show a popup-message with the exact text `todays lookup quota is used`.
 - The lookup fills or suggests known asset fields returned by the service.
 - Initial fields to fill when available:
   - `ticker`
@@ -177,6 +183,14 @@ Expected behavior:
 - The user must still press Save/Create to persist the asset.
 - Lookup errors should be shown as a small user-visible message inside the widget.
 - Lookup errors should not break the page or clear the form.
+
+Quota behavior:
+
+- `isin_counter` is stored in the `variables` table.
+- `isin_counter` is interpreted as an integer.
+- If `isin_counter` is missing, empty, or not numeric, the lookup should fail softly and show a configuration-needed message rather than calling the provider.
+- The daily reset process for `isin_counter` is TBS.
+- Until reset behavior is specified, the counter is maintained manually through the Variables CRUD widget.
 
 Preferred provider:
 
@@ -234,6 +248,10 @@ Configuration:
 
 - Store API credentials in environment/config, not in source code.
 - Suggested environment key: `EODHD_API_TOKEN`.
+- The project `.env.example` should include `EODHD_API_TOKEN=` as an empty placeholder.
+- Setup notes should explain that the user must obtain an EODHD API token and add it to `.env`.
+- Setup notes should mention running `php artisan config:clear` or restarting the app after changing the token.
+- Real API tokens must not be committed to Git.
 - If no API token is configured, the lookup button may be disabled or may show a clear configuration-needed message.
 - The application should use a small service class for provider calls so the UI component does not contain provider-specific HTTP details.
 
@@ -272,6 +290,7 @@ Included:
 - ISIN lookup button in the asset form
 - Initial EODHD-based lookup behavior
 - Local mapping from lookup result to asset form fields
+- Daily lookup quota counter using `variables.isin_counter`
 - Pagination for the asset list
 - Show/hide form button in the widget heading
 - Shared CRUD list behavior from `008-shared-crud-list-behavior`

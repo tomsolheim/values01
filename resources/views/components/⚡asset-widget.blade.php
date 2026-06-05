@@ -3,6 +3,8 @@
 use App\Models\Area;
 use App\Models\Asset;
 use App\Models\Bundle;
+use App\Models\Variable;
+use App\Services\AssetLookupService;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -25,6 +27,9 @@ new class extends Component
     public $editId = null;
     public $search = '';
     public $csvImport;
+    public ?string $lookupMessage = null;
+    public ?string $lookupPopupMessage = null;
+    public array $lookupChoices = [];
 
     public array $typeOptions = ['Stock', 'Bank', 'Fund', 'Other'];
     public array $countryOptions = ['NO', 'SE', 'DK', 'DE', 'F', 'ES', 'US', 'UK', 'Other'];
@@ -63,6 +68,9 @@ new class extends Component
         $this->area_id = '';
         $this->comment = '';
         $this->editId = null;
+        $this->lookupMessage = null;
+        $this->lookupPopupMessage = null;
+        $this->lookupChoices = [];
         $this->resetValidation();
     }
 
@@ -109,6 +117,86 @@ new class extends Component
         if ($this->editId === (int) $id) {
             $this->resetForm();
         }
+    }
+
+    public function lookupIsin(AssetLookupService $lookup)
+    {
+        $this->lookupMessage = null;
+        $this->lookupPopupMessage = null;
+        $this->lookupChoices = [];
+
+        if (blank($this->isin)) {
+            $this->lookupMessage = 'Enter an ISIN before lookup.';
+            return;
+        }
+
+        $counter = Variable::query()->where('name', 'isin_counter')->first();
+
+        if (!$counter || !is_numeric($counter->value)) {
+            $this->lookupMessage = 'ISIN lookup counter is not configured.';
+            return;
+        }
+
+        if ((int) $counter->value <= 0) {
+            $this->lookupPopupMessage = 'todays lookup quota is used';
+            return;
+        }
+
+        if (!config('services.eodhd.token')) {
+            $this->lookupMessage = 'ISIN lookup needs EODHD_API_TOKEN to be configured.';
+            return;
+        }
+
+        $counter->update(['value' => (string) ((int) $counter->value - 1)]);
+
+        $result = $lookup->search($this->isin);
+
+        if ($result['status'] === 'error') {
+            $this->lookupMessage = 'ISIN lookup failed. Try again later.';
+            return;
+        }
+
+        if ($result['status'] === 'not-found') {
+            $this->lookupMessage = 'No match found.';
+            return;
+        }
+
+        $choice = collect($result['results'])->firstWhere('isPrimary', true)
+            ?? collect($result['results'])->firstWhere('country', $this->country);
+
+        if (!$choice && count($result['results']) > 1) {
+            $this->lookupChoices = $result['results'];
+            $this->lookupMessage = 'Choose a lookup result.';
+            return;
+        }
+
+        $this->applyLookupChoice($choice ?? $result['results'][0]);
+    }
+
+    public function useLookupChoice(int $index)
+    {
+        if (!isset($this->lookupChoices[$index])) {
+            return;
+        }
+
+        $this->applyLookupChoice($this->lookupChoices[$index]);
+        $this->lookupChoices = [];
+    }
+
+    private function applyLookupChoice(array $choice): void
+    {
+        $this->ticker = $this->ticker ?: ($choice['ticker'] ?? '');
+        $this->country = $this->country ?: ($choice['country'] ?? '');
+        $this->name = $this->name ?: ($choice['name'] ?? '');
+        $this->type = $this->type ?: ($choice['type'] ?? '');
+
+        if (!$this->area_id && ($choice['country'] ?? null)) {
+            $this->area_id = Area::query()->where('name', $choice['country'])->value('id')
+                ?: Area::query()->where('name', 'Unknown')->value('id')
+                ?: '';
+        }
+
+        $this->lookupMessage = 'Lookup values applied. Save to persist changes.';
     }
 
     public function importCsv()
@@ -305,10 +393,30 @@ new class extends Component
                     </div>
                     <div class="mt-3 d-flex gap-2">
                         <button type="submit" class="btn btn-primary btn-sm">{{ $editId ? 'Update' : 'Create' }}</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" wire:click="lookupIsin" @disabled(blank($isin))>Lookup ISIN</button>
                         @if ($editId)
                             <button type="button" class="btn btn-outline-secondary btn-sm" wire:click="resetForm">Cancel</button>
                         @endif
                     </div>
+
+                    @if ($lookupMessage)
+                        <div class="alert alert-info py-2 mt-3 mb-0 small">{{ $lookupMessage }}</div>
+                    @endif
+
+                    @if ($lookupPopupMessage)
+                        <div class="alert alert-warning py-2 mt-3 mb-0 small" data-popup-message>{{ $lookupPopupMessage }}</div>
+                    @endif
+
+                    @if ($lookupChoices)
+                        <div class="mt-3 border rounded p-2" data-isin-lookup-choices>
+                            <div class="small text-muted mb-2">Lookup choices</div>
+                            @foreach ($lookupChoices as $index => $choice)
+                                <button type="button" class="btn btn-sm btn-outline-secondary me-2 mb-2" wire:click="useLookupChoice({{ $index }})">
+                                    {{ $choice['name'] ?? 'Unknown' }} {{ $choice['ticker'] ? '('.$choice['ticker'].')' : '' }}
+                                </button>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
         </form>

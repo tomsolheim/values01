@@ -10,6 +10,10 @@
 - `comment` is required.
 - System Status can read `vmware_cores` from the `variables` table when available.
 - If `vmware_cores` is missing, System Status should fall back safely.
+- The initial variables include `isin_counter`.
+- `isin_counter` has group `lookup`.
+- `isin_counter` starts with value `20`.
+- Asset ISIN Lookup can read and update `isin_counter`.
 - The Variables CRUD widget appears at the bottom of the workbench.
 - The Variables CRUD widget is below the main tabbed workbench content.
 - The Variables CRUD widget is not a workbench tab.
@@ -28,6 +32,8 @@
 - A validation test confirms required fields are enforced.
 - A feature or Livewire test confirms System Status can read `vmware_cores`.
 - A feature or Livewire test confirms System Status falls back safely when `vmware_cores` is missing.
+- A feature or Livewire test confirms `isin_counter` exists with initial value `20`.
+- A feature or Livewire test confirms Asset ISIN Lookup can read and update `isin_counter`.
 - A feature or browser test confirms the Variables widget appears below the tabbed workbench.
 - A feature or Livewire test confirms variables can be created, listed, updated, and deleted.
 - A feature or browser test confirms the Variables list follows shared CRUD behavior.
