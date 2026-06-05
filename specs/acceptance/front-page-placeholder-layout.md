@@ -11,7 +11,7 @@
 - `top01` shows the title `Values and assets`.
 - `top01` shows the subtitle `Historic data`.
 - `top01` shows a purple line.
-- `top01` keeps the same height as the top-left source card from `frontdemo02`.
+- `top01` uses a minimum height of `200px`.
 - `top08` and Instance Info in the `top09` position are aligned to the right side of the top area on desktop.
 - `top08` and Instance Info appear as a right-side group on desktop.
 - Instance Info shows Project, Hostname, and IP Address.
@@ -49,7 +49,7 @@
 
 - A feature test confirms the front page contains `top01`, `top08`, and Instance Info.
 - A feature test confirms `top01` contains `Values and assets` and `Historic data`.
-- A browser or visual test confirms `top01` has a purple line and source-card height.
+- A browser or visual test confirms `top01` has a purple line and minimum height of `200px`.
 - A browser or visual test confirms `top01` is left aligned and `top08`/Instance Info are right aligned on desktop.
 - A feature test confirms Instance Info contains Project, Hostname, and IP Address labels.
 - A feature test confirms the front page contains Card Selector.

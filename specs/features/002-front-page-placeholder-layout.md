@@ -26,8 +26,8 @@ The front page uses a 12-column grid.
   - `top01`
   - `top08`
   - `top09`
-- `top01` and `top08` are placeholders only in the first step.
-- `top09` is replaced by the Instance Info widget reused from `/tomaco3/htdocs/frontdemo02`.
+- `top08` is a placeholder only in the first step.
+- `top09` is replaced by the Instance Info widget.
 - `top01` is always aligned to the left side of the top area.
 - `top08` and `top09` are always aligned to the right side of the top area.
 - `top08` and `top09` should appear as a right-side group.
@@ -36,14 +36,12 @@ The front page uses a 12-column grid.
 
 ### Top01 Identity Card
 
-- `top01` is an identity card based on the top-left card from `/tomaco3/htdocs/frontdemo02`.
-- `top01` keeps the same height as the source card.
-- Source card height reference: `min-height: 200px`.
+- `top01` is an identity card.
+- `top01` uses a minimum height of `200px`.
 - The source title `Tomaco Insight` is replaced with `Values and assets`.
 - The source subtitle `Temporary front end` is replaced with `Historic data`.
 - The source green line is replaced with a purple line.
-- The line keeps the same size as the source card line.
-- Source line size reference: width `24mm`, height `3mm`.
+- The line uses width `24mm` and height `3mm`.
 - The card should keep the same general visual structure:
   - White Bootstrap card
   - Soft shadow
@@ -55,7 +53,6 @@ The front page uses a 12-column grid.
 ### Instance Info
 
 - The Instance Info widget appears in the `top09` position.
-- The widget is based on `frontdemo02`'s `instance-info` widget.
 - The widget shows app/runtime identity information.
 - Initial fields:
   - Project
@@ -73,8 +70,8 @@ Below the top area, the page is split into:
 ### Sidebar
 
 - The sidebar contains reusable widgets.
-- `side01` is replaced by the Card Selector widget reused from `/tomaco3/htdocs/frontdemo02`.
-- The sidebar also includes the following widgets reused from `/tomaco3/htdocs/frontdemo02`:
+- `side01` is replaced by the Card Selector widget.
+- The sidebar also includes the following widgets:
   - Time
   - Git Status
   - System Status
@@ -87,7 +84,6 @@ Below the top area, the page is split into:
 ### Card Selector
 
 - The Card Selector widget appears in the `side01` position.
-- The widget is based on `frontdemo02`'s `customer-card-selector` / card selector pattern.
 - The widget controls the visibility of registered cards or widget panels.
 - `top01` is not controlled by the Card Selector.
 - `top01` should remain visible regardless of Card Selector state.
@@ -110,7 +106,6 @@ Below the top area, the page is split into:
 ### Time
 
 - The Time widget appears in the sidebar.
-- The widget is based on `frontdemo02`'s `local-time` widget.
 - The widget shows:
   - Local time
   - UTC time
@@ -120,7 +115,6 @@ Below the top area, the page is split into:
 ### Git Status
 
 - The Git Status widget appears in the sidebar.
-- The widget is based on `frontdemo02`'s `git-status` widget.
 - The widget shows local repository status.
 - Initial fields:
   - Current commit hash
@@ -136,7 +130,6 @@ Below the top area, the page is split into:
 ### System Status
 
 - The System Status widget appears in the sidebar.
-- The widget is based on `frontdemo02`'s `system-status` widget.
 - The widget shows runtime machine status.
 - Initial fields:
   - CPUs
@@ -191,7 +184,7 @@ Included:
 - Full-width top area
 - Top-area left/right alignment
 - 3-column sidebar
-- Reused sidebar widgets: Card Selector, Time, Git Status, and System Status
+- Sidebar widgets: Card Selector, Time, Git Status, and System Status
 - 9-column workbench
 - Bottom-of-workbench Variables CRUD widget
 - Card Selector in the `side01` position
@@ -210,9 +203,7 @@ Not included:
 
 - Use Bootstrap 5 grid classes for the 12-column structure.
 - Use Bootstrap cards for placeholder boxes.
-- Reuse the behavior and visual structure of the `frontdemo02` Card Selector and Instance Info widgets where practical.
-- Reuse the behavior and visual structure of the `frontdemo02` Time, Git Status, and System Status widgets where practical.
-- Adapt reused widgets to Values01 naming, layout, and Bootstrap 5 conventions.
+- Use Values01 naming, layout, and Bootstrap 5 conventions.
 - Use Bootstrap 5 grid or flex utilities to keep `top01` left and `top08`/`top09` right on desktop.
 - Use Bootstrap tabs for the workbench.
 - Use the visible tab labels from the tab registry in the UI.
@@ -226,6 +217,6 @@ Not included:
 - On small screens, the sidebar and workbench may stack vertically.
 - Tab labels should remain readable and not overflow awkwardly.
 - Placeholder cards should make their region names visible.
-- Reused widgets should not introduce unrelated dependencies from `frontdemo02`.
-- Reused widgets should not break the 12-column top area or 3-column sidebar layout.
+- Widgets should not introduce unrelated dependencies.
+- Widgets should not break the 12-column top area or 3-column sidebar layout.
 - Card Selector registration should treat the tabbed workbench and Variables widget as distinct selectable cards.

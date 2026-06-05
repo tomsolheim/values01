@@ -79,8 +79,6 @@ Placement rules:
 
 ## Variables CRUD Widget
 
-The Variables CRUD widget is based on `frontdemo02`'s `variable-form` and `variable-list` widgets.
-
 The widget includes:
 
 - A form area for creating and editing variables.
@@ -134,7 +132,6 @@ Included:
 - Initial `vmware_cores` runtime variable
 - Relationship to System Status
 - Variables CRUD widget at the bottom of the workbench
-- Reuse of `frontdemo02` variable form/list behavior
 - Shared CRUD list behavior
 
 Not included:
