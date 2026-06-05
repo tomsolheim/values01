@@ -23,8 +23,10 @@ new class extends Component
 ?>
 
 <div class="card h-100" data-card-toggle="top09">
+    <div class="card-header bg-white border-bottom py-2" data-utility-card-header>
+        <h6 class="mb-0 fw-semibold small"><i class="bi bi-info-circle me-1"></i>Instance Info</h6>
+    </div>
     <div class="card-body">
-        <h6 class="card-title text-secondary">Instance Info</h6>
         <div class="d-flex justify-content-between gap-3 small">
             <span class="text-muted">Project</span>
             <span class="fw-semibold text-end">{{ $projectName }}</span>

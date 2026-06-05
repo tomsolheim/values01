@@ -29,6 +29,19 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('shadow-sm border-0', false);
     }
 
+    public function test_utility_cards_use_standard_header_style(): void
+    {
+        $response = $this->get('/');
+
+        $this->assertSame(6, substr_count($response->getContent(), 'data-utility-card-header'));
+        $response->assertSee('card-header bg-white border-bottom', false);
+        $response->assertSee('mb-0 fw-semibold small', false);
+
+        foreach (['bi-square', 'bi-info-circle', 'bi-sliders', 'bi-clock', 'bi-git', 'bi-server'] as $icon) {
+            $response->assertSee($icon);
+        }
+    }
+
     public function test_top_area_aligns_top01_left_and_top08_top09_right(): void
     {
         $response = $this->get('/');

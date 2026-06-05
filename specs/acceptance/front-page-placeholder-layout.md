@@ -14,6 +14,11 @@
 - `top01` uses a minimum height of `200px`.
 - `top08` and Instance Info in the `top09` position are aligned to the right side of the top area on desktop.
 - `top08` and Instance Info appear as a right-side group on desktop.
+- `top08` has a title/header area with a thin line at the bottom.
+- Instance Info in the `top09` position has a title/header area with a thin line at the bottom.
+- All sidebar cards have a title/header area with a thin line at the bottom.
+- All sidebar card headings, `top08`, and Instance Info use bold text with the same font family and font size.
+- All sidebar card headings, `top08`, and Instance Info show a small purpose icon before the heading.
 - Instance Info shows Project, Hostname, and IP Address.
 - The main content area has a sidebar that is 3 grid columns wide on desktop.
 - The main content area has a workbench that is 9 grid columns wide on desktop.
@@ -51,6 +56,7 @@
 - A feature test confirms `top01` contains `Values and assets` and `Historic data`.
 - A browser or visual test confirms `top01` has a purple line and minimum height of `200px`.
 - A browser or visual test confirms `top01` is left aligned and `top08`/Instance Info are right aligned on desktop.
+- A browser or visual test confirms sidebar cards, `top08`, and Instance Info use the standard utility card header style.
 - A feature test confirms Instance Info contains Project, Hostname, and IP Address labels.
 - A feature test confirms the front page contains Card Selector.
 - A feature test confirms the sidebar contains Time, Git Status, and System Status.

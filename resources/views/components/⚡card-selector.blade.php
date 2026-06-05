@@ -22,8 +22,8 @@ new class extends Component
 ?>
 
 <div class="card mb-3" data-card-visibility-controller data-card-selector-position="side01">
-    <div class="card-header bg-white d-flex justify-content-between align-items-center gap-2 py-2">
-        <span class="fw-semibold"><i class="bi bi-sliders"></i> Card Selector</span>
+    <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center gap-2 py-2" data-utility-card-header>
+        <h6 class="mb-0 fw-semibold small"><i class="bi bi-sliders me-1"></i>Card Selector</h6>
         <div class="btn-group btn-group-sm" role="group" aria-label="Card Selector actions">
             <button type="button" class="btn btn-outline-success" data-card-action="all-on">All on</button>
             <button type="button" class="btn btn-outline-secondary" data-card-action="all-off">All off</button>

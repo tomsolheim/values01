@@ -16,8 +16,10 @@
             <div class="row g-3 justify-content-end h-100" data-top-right-group>
                 <div class="col-12 col-md-6 ms-md-auto" data-card-toggle="top08">
                     <div class="card h-100">
+                        <div class="card-header bg-white border-bottom py-2" data-utility-card-header>
+                            <h6 class="mb-0 fw-semibold small"><i class="bi bi-square me-1"></i>top08</h6>
+                        </div>
                         <div class="card-body">
-                            <h6 class="card-title text-secondary">top08</h6>
                             <p class="card-text small text-muted">Placeholder card</p>
                         </div>
                     </div>

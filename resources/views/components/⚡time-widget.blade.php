@@ -6,8 +6,10 @@ new class extends Component {};
 ?>
 
 <div class="card mb-3" data-card-toggle="time" data-local-time-widget>
+    <div class="card-header bg-white border-bottom py-2" data-utility-card-header>
+        <h6 class="mb-0 fw-semibold small"><i class="bi bi-clock me-1"></i>Time</h6>
+    </div>
     <div class="card-body">
-        <h6 class="card-title text-secondary">Time</h6>
         <div class="d-flex justify-content-between gap-3 small">
             <span class="text-muted">Local time</span>
             <span class="fw-semibold text-end" data-local-time-value>--</span>

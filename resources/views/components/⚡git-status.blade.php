@@ -40,13 +40,13 @@ new class extends Component
 ?>
 
 <div class="card mb-3" data-card-toggle="git-status" wire:poll.30s>
+    <div class="card-header bg-white border-bottom d-flex align-items-center justify-content-between gap-2 py-2" data-utility-card-header>
+        <h6 class="mb-0 fw-semibold small"><i class="bi bi-git me-1"></i>Git Status</h6>
+        <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-1" wire:click="refreshRemote" title="Refresh Git status">
+            <i class="bi bi-cloud-arrow-down"></i>
+        </button>
+    </div>
     <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between mb-2">
-            <h6 class="card-title text-secondary mb-0">Git Status</h6>
-            <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-1" wire:click="refreshRemote" title="Refresh Git status">
-                <i class="bi bi-cloud-arrow-down"></i>
-            </button>
-        </div>
         <div class="d-flex justify-content-between gap-3 small">
             <span class="text-muted">Current commit hash</span>
             <span class="fw-semibold text-end font-monospace">{{ $commitHash }}</span>

@@ -53,6 +53,7 @@ The front page uses a 12-column grid.
 ### Instance Info
 
 - The Instance Info widget appears in the `top09` position.
+- `top09` follows the standard utility card header style.
 - The widget shows app/runtime identity information.
 - Initial fields:
   - Project
@@ -75,6 +76,37 @@ Below the top area, the page is split into:
   - Time
   - Git Status
   - System Status
+
+### Standard Utility Card Header
+
+This header style applies to:
+
+- All sidebar cards
+- `top08`
+- `top09`
+
+Rules:
+
+- Each card has a title/header area at the top.
+- The title/header area has a thin line at the bottom.
+- The card heading uses bold text.
+- The card heading uses the same font family and font size across all cards using this style.
+- A small purpose icon appears before the heading.
+- The icon should visually indicate the purpose of the card.
+- The icon and heading should be aligned on the same baseline.
+- Header spacing should be compact and consistent across cards.
+- The title/header area should not make cards feel heavy or oversized.
+
+Initial purpose icons:
+
+| Card | Suggested Purpose Icon |
+| --- | --- |
+| `top08` | Icon indicating its specified purpose when that card is defined |
+| `top09` / Instance Info | Info or server identity icon |
+| Card Selector | Sliders or controls icon |
+| Time | Clock icon |
+| Git Status | Git branch or Git icon |
+| System Status | Server or activity icon |
 - The sidebar widget order is:
   - Card Selector
   - Time
@@ -203,6 +235,7 @@ Not included:
 
 - Use Bootstrap 5 grid classes for the 12-column structure.
 - Use Bootstrap cards for placeholder boxes.
+- Use the standard utility card header style for all sidebar cards, `top08`, and `top09`.
 - Use Values01 naming, layout, and Bootstrap 5 conventions.
 - Use Bootstrap 5 grid or flex utilities to keep `top01` left and `top08`/`top09` right on desktop.
 - Use Bootstrap tabs for the workbench.
