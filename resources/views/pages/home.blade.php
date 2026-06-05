@@ -4,7 +4,7 @@
 
     <div class="row g-3 mb-3 align-items-stretch" data-top-area>
         <div class="col-12 col-md-4" data-top-position="left" data-top-card="top01">
-            <div class="card h-100 shadow-sm border-0" style="min-height: 200px;">
+            <div class="card shadow-sm border-0" style="height: 150px;">
                 <div class="card-body p-4">
                     <h1 class="h3 fw-bold text-dark mb-2">Values and assets</h1>
                     <p class="text-muted mb-0">Historic data</p>
@@ -15,14 +15,7 @@
         <div class="col-12 col-md-8" data-top-position="right">
             <div class="row g-3 justify-content-end h-100" data-top-right-group>
                 <div class="col-12 col-md-6 ms-md-auto" data-card-toggle="top08">
-                    <div class="card h-100">
-                        <div class="card-header bg-white border-bottom py-2" data-utility-card-header>
-                            <h6 class="mb-0 fw-semibold small"><i class="bi bi-square me-1"></i>top08</h6>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text small text-muted">Placeholder card</p>
-                        </div>
-                    </div>
+                    <livewire:table-size-widget />
                 </div>
                 <div class="col-12 col-md-6" data-card-toggle="top09">
                     <livewire:instance-info />
@@ -43,7 +36,7 @@
             <div data-card-toggle="workbench">
                 <ul class="nav nav-tabs" id="workbenchTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="tab01-tab" data-bs-toggle="tab" data-bs-target="#tab01" type="button" role="tab">tab01</button>
+                        <button class="nav-link active" id="tab01-tab" data-bs-toggle="tab" data-bs-target="#tab01" type="button" role="tab">Status</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="tab02-tab" data-bs-toggle="tab" data-bs-target="#tab02" type="button" role="tab">Assets</button>
@@ -61,7 +54,7 @@
                         <button class="nav-link" id="tab06-tab" data-bs-toggle="tab" data-bs-target="#tab06" type="button" role="tab">History</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="tab07-tab" data-bs-toggle="tab" data-bs-target="#tab07" type="button" role="tab">tab07</button>
+                        <button class="nav-link" id="tab07-tab" data-bs-toggle="tab" data-bs-target="#tab07" type="button" role="tab">Import</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="tab08-tab" data-bs-toggle="tab" data-bs-target="#tab08" type="button" role="tab">tab08</button>
@@ -76,7 +69,7 @@
 
                 <div class="tab-content border border-top-0 rounded-bottom p-3 bg-white" id="workbenchTabContent">
                 <div class="tab-pane fade show active" id="tab01" role="tabpanel">
-                    <p class="text-muted small mb-0">info01</p>
+                    <livewire:status-widget />
                 </div>
                 <div class="tab-pane fade" id="tab02" role="tabpanel">
                     <livewire:asset-widget />
@@ -94,7 +87,7 @@
                     <p class="text-muted small mb-0">info06</p>
                 </div>
                 <div class="tab-pane fade" id="tab07" role="tabpanel">
-                    <p class="text-muted small mb-0">info07</p>
+                    <livewire:transaction-import-widget />
                 </div>
                 <div class="tab-pane fade" id="tab08" role="tabpanel">
                     <p class="text-muted small mb-0">info08</p>

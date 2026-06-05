@@ -29,6 +29,18 @@
 - The `area_id` field is a dropdown populated from the `areas` table.
 - The `name` and `comment` fields allow free manual content.
 - The widget can create an asset.
+- The asset form includes an ISIN lookup button beside the Save/Create button.
+- The ISIN lookup button uses the current `isin` field value.
+- The ISIN lookup action does not save the asset by itself.
+- The user must still press Save/Create to persist lookup-filled data.
+- The ISIN lookup can fill or suggest `ticker`, `country`, `name`, `type`, and `area_id`.
+- The ISIN lookup does not silently overwrite existing manually entered values.
+- The ISIN lookup prefers a primary provider result when multiple listings are returned.
+- If multiple plausible lookup results remain, the UI shows a compact choice list.
+- If no lookup result is found, the widget shows a clear message and leaves the form unchanged.
+- Lookup errors are visible inside the widget and do not break the page.
+- API credentials are read from environment/config and are not stored in source code.
+- If no API token is configured, the lookup action is disabled or shows a clear configuration-needed message.
 - The widget can list existing assets.
 - The widget can edit an existing asset.
 - The widget can delete an existing asset.
@@ -44,5 +56,8 @@
 - A feature or Livewire test confirms a user can create an asset with required fields.
 - A feature or Livewire test confirms optional fields may be empty.
 - A feature or Livewire test confirms assets are listed in `tab02`.
+- A feature or Livewire test confirms ISIN lookup fills suggested form fields without saving the asset.
+- A feature or Livewire test confirms ISIN lookup does not silently overwrite manually entered form values.
+- A feature or Livewire test confirms missing API configuration is handled clearly.
 - A feature or Livewire test confirms an asset can be updated.
 - A feature or Livewire test confirms an asset can be deleted.

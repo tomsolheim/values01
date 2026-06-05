@@ -26,7 +26,7 @@ The front page uses a 12-column grid.
   - `top01`
   - `top08`
   - `top09`
-- `top08` is a placeholder only in the first step.
+- `top08` is replaced by the Table Size widget.
 - `top09` is replaced by the Instance Info widget.
 - `top01` is always aligned to the left side of the top area.
 - `top08` and `top09` are always aligned to the right side of the top area.
@@ -37,10 +37,10 @@ The front page uses a 12-column grid.
 ### Top01 Identity Card
 
 - `top01` is an identity card.
-- `top01` uses a minimum height of `200px`.
-- The source title `Tomaco Insight` is replaced with `Values and assets`.
-- The source subtitle `Temporary front end` is replaced with `Historic data`.
-- The source green line is replaced with a purple line.
+- `top01` uses a height of `150px`.
+- The card title is `Values and assets`.
+- The card subtitle is `Historic data`.
+- The card has a purple line.
 - The line uses width `24mm` and height `3mm`.
 - The card should keep the same general visual structure:
   - White Bootstrap card
@@ -59,6 +59,24 @@ The front page uses a 12-column grid.
   - Project
   - Hostname
   - IP Address
+- The widget should adapt visually to the Values01 Bootstrap 5 layout.
+
+### Table Size
+
+- The Table Size widget appears in the `top08` position.
+- `top08` follows the standard utility card header style.
+- The widget heading is `Table Size`.
+- The purpose icon is a disk/storage icon.
+- The widget shows row counts for key tables:
+  - Assets
+  - Bundles
+  - Areas
+  - Transactions
+  - Variables
+- The row-count display should use two compact columns so the content fits inside the current top-card height.
+- Each count item shows a human-readable table label and the current number of rows.
+- Counts should be read from the live database tables.
+- If a table is unavailable during early implementation or testing, the widget should fail softly and show a neutral value such as `0` or `-`, rather than breaking the page.
 - The widget should adapt visually to the Values01 Bootstrap 5 layout.
 
 ### Main Area
@@ -101,7 +119,7 @@ Initial purpose icons:
 
 | Card | Suggested Purpose Icon |
 | --- | --- |
-| `top08` | Icon indicating its specified purpose when that card is defined |
+| `top08` / Table Size | Disk or storage icon |
 | `top09` / Instance Info | Info or server identity icon |
 | Card Selector | Sliders or controls icon |
 | Time | Clock icon |
@@ -192,17 +210,33 @@ Initial purpose icons:
 - The Variables CRUD widget remains visible below the tabs regardless of the active tab.
 - The tabbed workbench area and the Variables CRUD widget are separate cards or widget panels for Card Selector purposes.
 
+### Status Tab
+
+- The Status tab appears in the `tab01` position.
+- The visible tab label is `Status`.
+- At this stage, the Status tab contains a bundle asset-count list.
+- The list shows every bundle.
+- Each row shows:
+  - Bundle name
+  - Count of assets assigned to that bundle
+- Asset counts are calculated from the `assets.bundle_id` relationship.
+- Bundles with no assets should still appear with count `0`.
+- The list is read-only in this first implementation.
+- No create, edit, delete, import, export, or form controls are included in the Status tab at this stage.
+- The list should use compact Bootstrap 5 table or list styling suitable for the workbench.
+- The Status tab must follow the same tab-persistence rules as the other workbench tabs.
+
 Tab registry:
 
 | Tab ID | Visible Label | Initial Content |
 | --- | --- | --- |
-| `tab01` | `tab01` | `info01` placeholder |
+| `tab01` | `Status` | Bundle asset-count list |
 | `tab02` | `Assets` | Asset form/list widget |
 | `tab03` | `Bundles` | Bundle form/list widget |
 | `tab04` | `Areas` | Area form/list widget |
 | `tab05` | `Holdings` | Holdings form/list widget |
 | `tab06` | `History` | History list widget |
-| `tab07` | `tab07` | `info07` placeholder |
+| `tab07` | `Import` | Transaction import widget |
 | `tab08` | `tab08` | `info08` placeholder |
 | `tab09` | `tab09` | `info09` placeholder |
 | `tab10` | `tab10` | `info10` placeholder |
@@ -220,7 +254,9 @@ Included:
 - 9-column workbench
 - Bottom-of-workbench Variables CRUD widget
 - Card Selector in the `side01` position
+- Table Size in the `top08` position
 - Instance Info in the `top09` position
+- Status tab in the `tab01` position
 - 10-tab workbench with stable internal ids and visible labels
 - Persisted active tab state during widget interactions
 
@@ -229,7 +265,6 @@ Not included:
 - Real data
 - Business logic
 - User-specific state
-- Card actions
 
 ## UI Notes
 

@@ -140,6 +140,41 @@ The user may choose:
 
 Because the file has no ticker column, ticker-based filtering should not be used for this import. The filter label may explain this as "ISIN filter".
 
+## Asset Creation From Import
+
+The import function includes an option to add assets to the `assets` table from the imported transaction file.
+
+Expected behavior:
+
+- The function creates only new assets.
+- Existing assets are checked by name before creating a new asset.
+- If an asset with the same name already exists, the importer does not create a duplicate asset.
+- Asset creation is independent of transaction duplicate handling.
+- If a transaction row is skipped because its `source_id` already exists, the same row may still be used to create a missing asset when the add-assets option is enabled.
+- A repeated import with add-assets enabled must be able to create missing assets even when all matching transactions have already been imported.
+- The ISIN filter still applies before asset creation. In One ISIN mode, only rows matching the selected ISIN may create assets.
+- The importer includes all known asset data from the transaction file.
+- Known asset data from the transaction file includes:
+  - `ISIN`
+  - Company/security name from `Verdipapir`
+- Imported assets use `type = Stock`.
+- Imported assets use Bundle `Import`.
+- Imported assets use Area `Unknown`.
+- If Bundle `Import` does not exist, the importer may create it.
+- If Area `Unknown` does not exist, the importer may create it.
+- Rows without company/security name should not create an asset.
+- Rows without ISIN may create an asset only if there is enough information to avoid duplicates. This behavior is TBS.
+
+Field mapping for imported assets:
+
+| Asset Field | Import Source / Value |
+| --- | --- |
+| `type` | `Stock` |
+| `isin` | Source column `ISIN` |
+| `name` | Source column `Verdipapir` |
+| `bundle_id` | Bundle named `Import` |
+| `area_id` | Area named `Unknown` |
+
 ## Relationship to Assets
 
 - Transactions should match assets by `transactions.isin = assets.isin`.
@@ -159,7 +194,14 @@ Because the file has no ticker column, ticker-based filtering should not be used
 
 ## UI Placement
 
-The transaction import widget location is TBS.
+The transaction import widget belongs in the workbench tab named `tab07`.
+
+The visible tab label is `Import`.
+
+In the first implementation step:
+
+- `tab07` no longer only shows `info07`.
+- `tab07` shows the transaction import widget.
 
 ## Scope
 
@@ -170,20 +212,22 @@ Included:
 - Import function specification
 - ISIN-based import filter
 - Relationship to Asset ISIN
+- Asset creation from import
+- Transaction import widget in `tab07`
 
 Not included:
 
-- Final workspace tab placement
 - Reconciliation rules
 - Calculation updates to holdings
 - Import preview design
 - Error reporting design
 - Undo import
-- Duplicate handling beyond unique `source_id`
+- Duplicate transaction handling beyond unique `source_id`
 
 ## Open Questions
 
-- Which workbench tab should contain the transaction import widget?
 - Should import show a preview before saving?
 - Should import support deleting or rolling back a full imported batch?
 - Should transactions without ISIN be linked to an internal asset later?
+- Should the add-assets function be a separate button or an option during transaction import?
+- Should duplicate asset checking use only name, or later include ISIN as an additional duplicate guard?

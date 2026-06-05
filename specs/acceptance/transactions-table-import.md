@@ -12,9 +12,23 @@
 - The import function supports importing one selected or manually entered ISIN.
 - The import function does not require ticker because the source file has no ticker column.
 - The import function maps repeated `Valuta` columns to distinct currency fields.
+- `tab07` in the workbench shows the transaction import widget.
+- The visible label for `tab07` is `Import`.
 - Transactions with ISIN can be matched to assets by `assets.isin`.
 - Transactions without ISIN may still be imported.
 - Imported decimal numbers using comma decimal separators are normalized for storage.
+- The import widget includes a function to add assets to the Asset table.
+- The add-assets function creates only new assets.
+- Existing assets are checked by name before creating a new asset.
+- Asset creation is independent of duplicate transaction skipping.
+- A repeated import with add-assets enabled can create missing assets even when the matching transactions already exist.
+- In One ISIN mode, add-assets only creates assets from rows matching the selected ISIN.
+- Imported assets include ISIN from the source `ISIN` column when available.
+- Imported assets include company/security name from source `Verdipapir`.
+- Imported assets use `type = Stock`.
+- Imported assets use Bundle `Import`.
+- Imported assets use Area `Unknown`.
+- Rows without company/security name do not create assets.
 
 ## Suggested Tests
 
@@ -25,8 +39,12 @@
 - An import test confirms rows for other ISINs are skipped when filtering by one ISIN.
 - An import test confirms rows without ISIN can be imported in all-ISIN mode.
 - An import test confirms duplicate `source_id` values are not imported twice.
+- A feature or Livewire test confirms the transaction import widget is available in `tab07`.
+- A feature or Livewire test confirms the add-assets function creates new assets from imported transaction rows.
+- A feature or Livewire test confirms the add-assets function can create missing assets from rows whose transactions were skipped as duplicate `source_id` values.
+- A feature or Livewire test confirms existing asset names are not duplicated.
+- A feature or Livewire test confirms imported assets are assigned type `Stock`, Bundle `Import`, and Area `Unknown`.
 
 ## Open Acceptance Items
 
-- Add acceptance criteria for import widget placement after its tab is specified.
 - Add acceptance criteria for preview, rollback, and error reporting after those behaviors are specified.

@@ -40,9 +40,20 @@ Run tests:
 php artisan test
 ```
 
-When JavaScript tooling is available:
+Install or refresh JavaScript dependencies:
 
 ```bash
 npm install
+```
+
+Run the Vite dev server:
+
+```bash
 npm run dev
+```
+
+Build production assets:
+
+```bash
+npm run build
 ```

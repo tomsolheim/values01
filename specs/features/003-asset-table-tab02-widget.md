@@ -147,7 +147,95 @@ Expected controls:
 - Dropdown for `area`
 - Textarea for `comment`
 - Save button
+- ISIN lookup button beside the Save/Create button
 - Cancel or reset button when editing
+
+### ISIN Lookup
+
+The asset form includes an ISIN lookup action for trying an external web service before saving the asset.
+
+Initial placement:
+
+- Place the lookup button beside the Save/Create button in the form action row.
+- The button label should be concise, such as `Lookup ISIN`.
+- The lookup button should be visually secondary to the Save/Create button.
+- The lookup button should be available when the `isin` field has a value.
+
+Expected behavior:
+
+- The lookup uses the current `isin` field value.
+- The lookup does not save the asset by itself.
+- The lookup fills or suggests known asset fields returned by the service.
+- Initial fields to fill when available:
+  - `ticker`
+  - `country`
+  - `name`
+  - `type`
+  - `area_id`
+- Existing manually entered values should not be overwritten silently.
+- If a target field already contains a value, the UI should either keep the existing value or require clear user confirmation before replacing it.
+- The user must still press Save/Create to persist the asset.
+- Lookup errors should be shown as a small user-visible message inside the widget.
+- Lookup errors should not break the page or clear the form.
+
+Preferred provider:
+
+- Use EODHD Search API as the initial provider.
+- Search endpoint:
+  - `https://eodhd.com/api/search/{ISIN}?api_token={API_TOKEN}&fmt=json`
+- Expected response fields to use:
+  - `Code` -> `ticker`
+  - `Country` -> `country` or Area mapping input
+  - `Name` -> `name`
+  - `Type` -> `type` mapping input
+  - `ISIN` -> validation against requested `isin`
+  - `Exchange` -> optional mapping input for area selection
+  - `isPrimary` -> preferred-result selection
+
+Fallback provider:
+
+- OpenFIGI may be used as a fallback or later provider for identifier mapping.
+- OpenFIGI request shape:
+  - `POST https://api.openfigi.com/v3/mapping`
+  - Body includes `idType = ID_ISIN` and `idValue = {ISIN}`.
+- OpenFIGI fields may be used for ticker, name, exchange code, market sector, and security type.
+
+Result selection:
+
+- ISIN lookup may return multiple listings.
+- Prefer a result where `isPrimary = true` when the provider supplies it.
+- If there is no primary result, prefer a result matching the current `country` field when that field is set.
+- If multiple plausible results remain, the user should be shown a compact choice list instead of the application choosing silently.
+- If no result is found, show a clear "No match found" message and leave the form unchanged.
+
+Local field mapping:
+
+- External asset type should map into the local Type dropdown:
+  - Common stock or stock -> `Stock`
+  - Bank, if identifiable -> `Bank`
+  - ETF, fund, mutual fund -> `Fund`
+  - Anything else -> `Other`
+- External country should map into the local Country dropdown when possible:
+  - `Norway` or `NOR` -> `NO`
+  - `Sweden` or `SWE` -> `SE`
+  - `Denmark` or `DNK` -> `DK`
+  - `Germany` or `DEU` -> `DE`
+  - `France` or `FRA` -> `F`
+  - `Spain` or `ESP` -> `ES`
+  - `United States`, `USA`, or `US` -> `US`
+  - `United Kingdom`, `GBR`, or `UK` -> `UK`
+  - Unknown or unsupported -> `Other`
+- Area mapping is local and should be based on existing `areas` records.
+- If an Area matching the mapped country code exists, select it.
+- If no matching Area exists, select Area `Unknown` when available.
+- The lookup should not create new Area records in this first implementation.
+
+Configuration:
+
+- Store API credentials in environment/config, not in source code.
+- Suggested environment key: `EODHD_API_TOKEN`.
+- If no API token is configured, the lookup button may be disabled or may show a clear configuration-needed message.
+- The application should use a small service class for provider calls so the UI component does not contain provider-specific HTTP details.
 
 ### List
 
@@ -181,6 +269,9 @@ Included:
 - Form/list widget specification
 - Connection between the widget and `tab02`
 - Create, list, edit, and delete behavior
+- ISIN lookup button in the asset form
+- Initial EODHD-based lookup behavior
+- Local mapping from lookup result to asset form fields
 - Pagination for the asset list
 - Show/hide form button in the widget heading
 - Shared CRUD list behavior from `008-shared-crud-list-behavior`
@@ -188,7 +279,9 @@ Included:
 Not included:
 
 - Import/export
-- External market data lookup
+- Automatic asset saving from lookup
+- Automatic Area creation from lookup
+- Live price lookup
 - Ticker validation against live exchanges
 - Advanced filtering
 - Authorization rules

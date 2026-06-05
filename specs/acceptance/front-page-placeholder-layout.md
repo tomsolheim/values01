@@ -11,10 +11,14 @@
 - `top01` shows the title `Values and assets`.
 - `top01` shows the subtitle `Historic data`.
 - `top01` shows a purple line.
-- `top01` uses a minimum height of `200px`.
+- `top01` uses a height of `150px`.
 - `top08` and Instance Info in the `top09` position are aligned to the right side of the top area on desktop.
 - `top08` and Instance Info appear as a right-side group on desktop.
 - `top08` has a title/header area with a thin line at the bottom.
+- `top08` shows the heading `Table Size`.
+- `top08` uses a disk/storage purpose icon.
+- `top08` shows row counts for Assets, Bundles, Areas, Transactions, and Variables.
+- `top08` uses a compact two-column layout for the row counts.
 - Instance Info in the `top09` position has a title/header area with a thin line at the bottom.
 - All sidebar cards have a title/header area with a thin line at the bottom.
 - All sidebar card headings, `top08`, and Instance Info use bold text with the same font family and font size.
@@ -36,8 +40,13 @@
 - Toggling the tabbed workbench card does not hide or show the Variables card.
 - Toggling the Variables card does not hide or show the tabbed workbench card.
 - The workbench has 10 stable internal tab ids named `tab01` through `tab10`.
-- The workbench shows visible tab labels `tab01`, `Assets`, `Bundles`, `Areas`, `Holdings`, `History`, `tab07`, `tab08`, `tab09`, and `tab10`.
-- Each tab shows matching placeholder content from `info01` through `info10`.
+- The workbench shows visible tab labels `Status`, `Assets`, `Bundles`, `Areas`, `Holdings`, `History`, `Import`, `tab08`, `tab09`, and `tab10`.
+- `tab01` is the Status tab.
+- The Status tab shows a read-only list of bundles.
+- Each Status tab row shows the bundle name and asset count.
+- Bundles with no assets appear with count `0`.
+- The Status tab does not show create, edit, delete, import, export, or form controls at this stage.
+- Placeholder tabs show their matching `info` content; implemented tabs show their specified widgets.
 - The Variables CRUD widget appears below the tabbed workbench area.
 - The Variables CRUD widget remains visible regardless of which tab is active.
 - The Variables CRUD widget is not rendered as an additional tab.
@@ -54,9 +63,11 @@
 
 - A feature test confirms the front page contains `top01`, `top08`, and Instance Info.
 - A feature test confirms `top01` contains `Values and assets` and `Historic data`.
-- A browser or visual test confirms `top01` has a purple line and minimum height of `200px`.
+- A browser or visual test confirms `top01` has a purple line and height of `150px`.
 - A browser or visual test confirms `top01` is left aligned and `top08`/Instance Info are right aligned on desktop.
 - A browser or visual test confirms sidebar cards, `top08`, and Instance Info use the standard utility card header style.
+- A feature or Livewire test confirms Table Size contains Assets, Bundles, Areas, Transactions, and Variables counts.
+- A browser or visual test confirms Table Size uses a compact two-column count layout inside the current top-card height.
 - A feature test confirms Instance Info contains Project, Hostname, and IP Address labels.
 - A feature test confirms the front page contains Card Selector.
 - A feature test confirms the sidebar contains Time, Git Status, and System Status.
@@ -65,8 +76,11 @@
 - A browser test confirms Card Selector `All off` does not hide `top01`.
 - A browser test confirms the tabbed workbench card and Variables card can be toggled independently.
 - A feature test confirms the front page contains the visible tab labels from the tab registry.
+- A feature or Livewire test confirms the Status tab lists bundles with asset counts.
+- A feature or Livewire test confirms bundles with no assets show count `0`.
+- A feature or browser test confirms the Status tab is read-only at this stage.
 - A feature or browser test confirms the Variables widget appears below the tabbed workbench and not as a tab.
 - A browser or visual test confirms the header-to-top-area spacing is compact.
-- A browser or Livewire test confirms each tab can reveal its matching `info` placeholder.
+- A browser or Livewire test confirms placeholder tabs can reveal their matching `info` placeholder.
 - A browser or Livewire test confirms Bundle pagination keeps the user on the `Bundles` tab.
 - A browser or Livewire test confirms widget interactions do not reset the workbench to `tab01`.

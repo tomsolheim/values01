@@ -2,6 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Area;
+use App\Models\Asset;
+use App\Models\Bundle;
+use App\Models\Transaction as TransactionModel;
+use App\Models\Variable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -13,7 +18,7 @@ class FrontPageLayoutTest extends TestCase
         $response = $this->get('/');
 
         $response->assertSee('data-top-card="top01"', false);
-        $response->assertSee('top08');
+        $response->assertSee('Table Size');
         $response->assertSee('Instance Info');
     }
 
@@ -25,7 +30,7 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('Historic data');
         $response->assertSee('data-top01-purple-line', false);
         $response->assertSee('width: 24mm; height: 3mm; background: #6f42c1;', false);
-        $response->assertSee('min-height: 200px;', false);
+        $response->assertSee('height: 150px;', false);
         $response->assertSee('shadow-sm border-0', false);
     }
 
@@ -37,9 +42,42 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('card-header bg-white border-bottom', false);
         $response->assertSee('mb-0 fw-semibold small', false);
 
-        foreach (['bi-square', 'bi-info-circle', 'bi-sliders', 'bi-clock', 'bi-git', 'bi-server'] as $icon) {
+        foreach (['bi-hdd', 'bi-info-circle', 'bi-sliders', 'bi-clock', 'bi-git', 'bi-server'] as $icon) {
             $response->assertSee($icon);
         }
+    }
+
+    public function test_top08_table_size_widget_matches_spec(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertSee('data-table-size-widget', false);
+        $response->assertSee('Table Size');
+        $response->assertSee('bi-hdd');
+        $response->assertSee('data-table-size-counts', false);
+
+        foreach (['Assets', 'Bundles', 'Areas', 'Transactions', 'Variables'] as $label) {
+            $response->assertSee($label);
+        }
+
+        $response->assertSee('col-6', false);
+    }
+
+    public function test_top08_table_size_reads_live_database_counts(): void
+    {
+        Bundle::create(['name' => 'Count Bundle']);
+        Area::create(['name' => 'Count Area']);
+        Asset::create(['type' => 'Stock', 'name' => 'Count Asset']);
+        TransactionModel::create(['source_id' => 'count-transaction']);
+        Variable::create(['name' => 'count_variable', 'value' => '1', 'group' => 'test', 'comment' => 'Count test.']);
+
+        $response = $this->get('/');
+
+        $response->assertSeeInOrder(['Assets', '1']);
+        $response->assertSeeInOrder(['Bundles', '1']);
+        $response->assertSeeInOrder(['Areas', '1']);
+        $response->assertSeeInOrder(['Transactions', '1']);
+        $response->assertSeeInOrder(['Variables', '2']);
     }
 
     public function test_top_area_aligns_top01_left_and_top08_top09_right(): void
@@ -175,13 +213,13 @@ class FrontPageLayoutTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertSee('tab01');
+        $response->assertSee('Status');
         $response->assertSee('Assets');
         $response->assertSee('Bundles');
         $response->assertSee('Areas');
         $response->assertSee('Holdings');
         $response->assertSee('History');
-        $response->assertSee('tab07');
+        $response->assertSee('Import');
         $response->assertSee('tab08');
         $response->assertSee('tab09');
         $response->assertSee('tab10');
@@ -200,10 +238,45 @@ class FrontPageLayoutTest extends TestCase
     {
         $response = $this->get('/');
 
-        foreach ([1, 5, 6, 7, 8, 9, 10] as $i) {
+        foreach ([5, 6, 8, 9, 10] as $i) {
             $num = str_pad((string) $i, 2, '0', STR_PAD_LEFT);
             $response->assertSeeText("info{$num}");
         }
+    }
+
+    public function test_tab01_shows_status_widget(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertSee('data-status-widget', false);
+        $response->assertSee('data-status-bundle-counts', false);
+        $response->assertSee('Bundle');
+        $response->assertSee('Assets');
+    }
+
+    public function test_status_tab_shows_bundle_asset_counts_including_zero(): void
+    {
+        $empty = Bundle::create(['name' => 'Empty Bundle']);
+        $filled = Bundle::create(['name' => 'Filled Bundle']);
+        Asset::create(['type' => 'Stock', 'name' => 'Asset One', 'bundle_id' => $filled->id]);
+        Asset::create(['type' => 'Fund', 'name' => 'Asset Two', 'bundle_id' => $filled->id]);
+
+        $response = $this->get('/');
+
+        $response->assertSeeInOrder(['Empty Bundle', '0']);
+        $response->assertSeeInOrder(['Filled Bundle', '2']);
+    }
+
+    public function test_tab07_shows_transaction_import_widget(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertSee('Import');
+        $response->assertSee('Transaction Import');
+        $response->assertSee('All ISINs');
+        $response->assertSee('One ISIN');
+        $response->assertSee('ISIN filter');
+        $response->assertSee('Add assets');
     }
 
     public function test_tab02_shows_asset_widget(): void
