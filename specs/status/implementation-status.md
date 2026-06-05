@@ -17,20 +17,22 @@ Status values:
 | Feature | Spec | Acceptance | Status | Notes |
 | --- | --- | --- | --- | --- |
 | Project foundation | `001-project-start` | `project-start` | `Verified` | Laravel 13 and Livewire 4 are installed. Basic app test passes. Bootstrap is specified and available by CDN fallback until npm is installed. |
-| Front page layout | `002-front-page-placeholder-layout` | `front-page-placeholder-layout` | `Partially implemented` | 12-column grid with compact top spacing, top01 left-aligned and not Card Selector-controlled, top08 and Instance Info/top09 grouped right, Card Selector in side01, side02 placeholder, and 10-tab workbench. Tab persistence via URL hash. Compact py-3 on main container. |
+| Front page layout | `002-front-page-placeholder-layout` | `front-page-placeholder-layout` | `Partially implemented` | 12-column grid with compact top spacing, top01 identity card left-aligned and not Card Selector-controlled, top08 and Instance Info/top09 grouped right, sidebar widgets in order (Card Selector, Time, Git Status, System Status), 10-tab workbench, and Variables widget below the tabbed workbench with a separate Card Selector control. Tab persistence via URL hash. Compact py-3 on main container. |
 | Asset widget | `003-asset-table-tab02-widget` | `asset-table-tab02-widget` | `Verified` | Asset table, model, and form/list widget live in tab02. Includes type/country dropdowns, ISIN uniqueness, bundle/area dropdowns, relation names in list, search, pagination, icon actions, and CSV import/export controls. Tested. |
 | Bundle and Area widgets | `004-bundle-area-tab-widgets` | `bundle-area-tab-widgets` | `Verified` | Bundle widget in tab03, Area widget in tab04. Both use pagination-sm, wire:click pagination, icon buttons with tooltips, WithPagination trait, search, and CSV import/export controls. Tested. |
 | Holdings widget | `005-holdings-table` | `holdings-table` | `Specified` | Form/list belongs in tab05. Calculations deferred. |
 | Transactions import | `006-transactions-table-import` | `transactions-table-import` | `Specified` | Uses ISIN filter because source file has no ticker. Widget tab is TBS. |
 | History list | `007-history-table-tab06-list` | `history-table-tab06-list` | `Specified` | List belongs in tab06 with Ticker/ISIN selector. Generation rules TBS. |
-| Shared CRUD list behavior | `008-shared-crud-list-behavior` | `shared-crud-list-behavior` | `Partially implemented` | Asset, Bundle, and Area widgets follow pagination-sm, wire:click pagination, icon buttons with tooltips, accessible labels, and right-aligned CSV import/export controls. Holdings not yet implemented. |
+| Shared CRUD list behavior | `008-shared-crud-list-behavior` | `shared-crud-list-behavior` | `Partially implemented` | Asset, Bundle, Area, and Variables widgets follow pagination-sm, wire:click pagination, icon buttons with tooltips, accessible labels, and right-aligned CSV import/export controls. Holdings not yet implemented. |
+| Variables table | `009-variables-table` | `variables-table` | `Verified` | Variables table, initial vmware_cores value, SystemStatusVariables reader/fallback, and bottom-of-workbench Variables CRUD widget are implemented and tested. |
 
 ## Current Prototype State
 
 - Laravel project exists at `/tomaco3/htdocs/values01`.
 - The current route `/` renders the Bootstrap workbench layout.
 - The tabbed workbench includes implemented Asset, Bundle, and Area widgets.
-- The front page includes Instance Info in the top09 position and Card Selector in the side01 position.
+- The front page includes Instance Info in the top09 position and sidebar widgets for Card Selector, Time, Git Status, and System Status.
+- The workbench includes a Variables CRUD widget below the tabbed area.
 - JavaScript package installation is pending because `npm` is not available on PATH.
 
 ## Next Recommended Implementation Slice

@@ -10,8 +10,11 @@ new class extends Component
             'cards' => [
                 ['id' => 'top08', 'label' => 'top08'],
                 ['id' => 'top09', 'label' => 'Instance Info'],
-                ['id' => 'side02', 'label' => 'side02'],
+                ['id' => 'time', 'label' => 'Time'],
+                ['id' => 'git-status', 'label' => 'Git Status'],
+                ['id' => 'system-status', 'label' => 'System Status'],
                 ['id' => 'workbench', 'label' => 'Workbench'],
+                ['id' => 'variables', 'label' => 'Variables'],
             ],
         ];
     }

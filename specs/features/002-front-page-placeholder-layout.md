@@ -2,7 +2,7 @@
 
 ## Goal
 
-Define the initial front page layout using a 12-column Bootstrap grid with placeholder cards and tabbed workspace content.
+Define the initial front page layout using a 12-column Bootstrap grid with top cards, sidebar widgets, and tabbed workspace content.
 
 ## User Story
 
@@ -34,6 +34,24 @@ The front page uses a 12-column grid.
 - The spacing between `top08` and `top09` should be compact and consistent with the grid gap.
 - The layout may stack on small screens, but desktop layout preserves left/right alignment.
 
+### Top01 Identity Card
+
+- `top01` is an identity card based on the top-left card from `/tomaco3/htdocs/frontdemo02`.
+- `top01` keeps the same height as the source card.
+- Source card height reference: `min-height: 200px`.
+- The source title `Tomaco Insight` is replaced with `Values and assets`.
+- The source subtitle `Temporary front end` is replaced with `Historic data`.
+- The source green line is replaced with a purple line.
+- The line keeps the same size as the source card line.
+- Source line size reference: width `24mm`, height `3mm`.
+- The card should keep the same general visual structure:
+  - White Bootstrap card
+  - Soft shadow
+  - No visible border
+  - Title near the top
+  - Subtitle below the title
+  - Short colored line below the subtitle
+
 ### Instance Info
 
 - The Instance Info widget appears in the `top09` position.
@@ -54,12 +72,17 @@ Below the top area, the page is split into:
 
 ### Sidebar
 
-- The sidebar contains two placeholder cards.
-- The cards are named:
-  - `side01`
-  - `side02`
+- The sidebar contains reusable widgets.
 - `side01` is replaced by the Card Selector widget reused from `/tomaco3/htdocs/frontdemo02`.
-- `side02` remains a placeholder in the first step.
+- The sidebar also includes the following widgets reused from `/tomaco3/htdocs/frontdemo02`:
+  - Time
+  - Git Status
+  - System Status
+- The sidebar widget order is:
+  - Card Selector
+  - Time
+  - Git Status
+  - System Status
 
 ### Card Selector
 
@@ -75,9 +98,59 @@ Below the top area, the page is split into:
   - A dropdown or compact list of checkboxes for individual cards.
 - Each controlled card or widget panel uses a stable card id.
 - Only cards explicitly registered with the Card Selector are affected by it.
+- The tabbed workbench card and the Variables card are separate Card Selector entries.
+- The tabbed workbench card uses its own stable card id.
+- The Variables card uses its own stable card id.
+- Toggling the tabbed workbench card must not toggle the Variables card.
+- Toggling the Variables card must not toggle the tabbed workbench card.
 - Card visibility controls should stay in sync with the visible cards.
 - The widget should adapt visually to the Values01 Bootstrap 5 layout.
 - The exact list of controlled cards is TBS before final implementation.
+
+### Time
+
+- The Time widget appears in the sidebar.
+- The widget is based on `frontdemo02`'s `local-time` widget.
+- The widget shows:
+  - Local time
+  - UTC time
+- Time values should refresh automatically without a full page reload.
+- The widget should adapt visually to the Values01 Bootstrap 5 layout.
+
+### Git Status
+
+- The Git Status widget appears in the sidebar.
+- The widget is based on `frontdemo02`'s `git-status` widget.
+- The widget shows local repository status.
+- Initial fields:
+  - Current commit hash
+  - Last commit date
+  - Local pending changes
+  - Branch
+  - Upstream
+  - Remote commit
+  - Ahead/behind sync status
+- The widget may include a refresh action for remote status.
+- The widget should adapt visually to the Values01 Bootstrap 5 layout.
+
+### System Status
+
+- The System Status widget appears in the sidebar.
+- The widget is based on `frontdemo02`'s `system-status` widget.
+- The widget shows runtime machine status.
+- Initial fields:
+  - CPUs
+  - VM CPUs or reserved CPUs
+  - CPU Load
+  - Memory
+  - Free Memory
+  - Disk
+  - Free Disk
+  - Used Disk
+  - Last Boot
+- The widget may refresh automatically or include a manual refresh action.
+- The widget uses the `variables` table for configurable runtime values such as reserved CPU count.
+- The widget should adapt visually to the Values01 Bootstrap 5 layout.
 
 ### Workbench
 
@@ -89,6 +162,10 @@ Below the top area, the page is split into:
 - Tab persistence applies to pagination, search, edit, delete, save, cancel, and form show/hide actions.
 - Interacting with a widget inside one tab must not reset the workbench back to `tab01`.
 - If the page reloads or a server round-trip occurs, the application should restore the previously active tab when possible.
+- A separate Variables CRUD widget appears at the bottom of the workbench below the tabbed area.
+- The Variables CRUD widget is not part of the tab set.
+- The Variables CRUD widget remains visible below the tabs regardless of the active tab.
+- The tabbed workbench area and the Variables CRUD widget are separate cards or widget panels for Card Selector purposes.
 
 Tab registry:
 
@@ -114,8 +191,9 @@ Included:
 - Full-width top area
 - Top-area left/right alignment
 - 3-column sidebar
+- Reused sidebar widgets: Card Selector, Time, Git Status, and System Status
 - 9-column workbench
-- Placeholder cards
+- Bottom-of-workbench Variables CRUD widget
 - Card Selector in the `side01` position
 - Instance Info in the `top09` position
 - 10-tab workbench with stable internal ids and visible labels
@@ -133,6 +211,7 @@ Not included:
 - Use Bootstrap 5 grid classes for the 12-column structure.
 - Use Bootstrap cards for placeholder boxes.
 - Reuse the behavior and visual structure of the `frontdemo02` Card Selector and Instance Info widgets where practical.
+- Reuse the behavior and visual structure of the `frontdemo02` Time, Git Status, and System Status widgets where practical.
 - Adapt reused widgets to Values01 naming, layout, and Bootstrap 5 conventions.
 - Use Bootstrap 5 grid or flex utilities to keep `top01` left and `top08`/`top09` right on desktop.
 - Use Bootstrap tabs for the workbench.
@@ -149,3 +228,4 @@ Not included:
 - Placeholder cards should make their region names visible.
 - Reused widgets should not introduce unrelated dependencies from `frontdemo02`.
 - Reused widgets should not break the 12-column top area or 3-column sidebar layout.
+- Card Selector registration should treat the tabbed workbench and Variables widget as distinct selectable cards.
