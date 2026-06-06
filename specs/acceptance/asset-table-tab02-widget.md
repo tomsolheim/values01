@@ -57,6 +57,21 @@
 - The asset list shows the columns `type`, `isin`, `ticker`, `country`, `name`, `bundle`, `area`, and `comment`.
 - The asset list displays bundle and area names rather than raw ids.
 - The asset list has a search field.
+- The asset list has a Bundle filter populated from the `bundles` table.
+- The asset list has an Area filter populated from the `areas` table.
+- The Bundle filter defaults to `All bundles`.
+- The Area filter defaults to `All areas`.
+- The asset list has a Clear Search button beside the search and filter controls.
+- Selecting a Bundle shows only assets assigned to that Bundle.
+- Selecting an Area shows only assets assigned to that Area.
+- Search, Bundle filter, and Area filter work together.
+- Changing search or either filter resets pagination to the first page.
+- Pressing Clear Search clears the broad search field.
+- Pressing Clear Search resets Bundle to `All bundles` and Area to `All areas`.
+- Pressing Clear Search resets pagination and restores the unfiltered asset list.
+- Pressing Clear Search keeps the Assets tab active.
+- Using the filters keeps the user on the Assets tab.
+- Using the filters does not change values in the asset form.
 - The asset list is paginated.
 
 ## Suggested Tests
@@ -71,5 +86,11 @@
 - A feature or Livewire test confirms ISIN lookup decrements `isin_counter` for external provider calls.
 - A feature or Livewire test confirms ISIN lookup is blocked when `isin_counter` is `0`.
 - A browser or Livewire test confirms the quota-used popup text is `todays lookup quota is used`.
+- A feature or Livewire test confirms the Bundle filter limits the asset list by `bundle_id`.
+- A feature or Livewire test confirms the Area filter limits the asset list by `area_id`.
+- A feature or Livewire test confirms search, Bundle, and Area filters can be combined.
+- A browser or Livewire test confirms filtering resets pagination and keeps the Assets tab active.
+- A feature or Livewire test confirms Clear Search clears the search text and resets both filters.
+- A browser or Livewire test confirms Clear Search restores the unfiltered first page and keeps the Assets tab active.
 - A feature or Livewire test confirms an asset can be updated.
 - A feature or Livewire test confirms an asset can be deleted.

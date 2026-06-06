@@ -307,4 +307,125 @@ class AssetWidgetTest extends TestCase
             ->call('lookupIsin')
             ->assertSet('lookupMessage', 'No match found.');
     }
+
+    public function test_asset_list_shows_bundle_filter(): void
+    {
+        Bundle::create(['name' => 'Filter Bundle']);
+
+        $response = $this->get('/');
+
+        $response->assertSee('data-asset-bundle-filter', false);
+        $response->assertSee('All bundles');
+        $response->assertSee('Filter Bundle');
+    }
+
+    public function test_asset_list_shows_area_filter(): void
+    {
+        Area::create(['name' => 'Filter Area']);
+
+        $response = $this->get('/');
+
+        $response->assertSee('data-asset-area-filter', false);
+        $response->assertSee('All areas');
+        $response->assertSee('Filter Area');
+    }
+
+    public function test_bundle_filter_limits_assets(): void
+    {
+        $bundleA = Bundle::create(['name' => 'Bundle A']);
+        $bundleB = Bundle::create(['name' => 'Bundle B']);
+
+        Asset::create(['type' => 'Stock', 'name' => 'Asset in A', 'bundle_id' => $bundleA->id]);
+        Asset::create(['type' => 'Stock', 'name' => 'Asset in B', 'bundle_id' => $bundleB->id]);
+
+        Livewire::test('asset-widget')
+            ->assertSee('Asset in A')
+            ->assertSee('Asset in B')
+            ->set('bundleFilter', (string) $bundleA->id)
+            ->assertSee('Asset in A')
+            ->assertDontSee('Asset in B');
+    }
+
+    public function test_area_filter_limits_assets(): void
+    {
+        $areaA = Area::create(['name' => 'Area A']);
+        $areaB = Area::create(['name' => 'Area B']);
+
+        Asset::create(['type' => 'Stock', 'name' => 'Asset in A', 'area_id' => $areaA->id]);
+        Asset::create(['type' => 'Stock', 'name' => 'Asset in B', 'area_id' => $areaB->id]);
+
+        Livewire::test('asset-widget')
+            ->assertSee('Asset in A')
+            ->assertSee('Asset in B')
+            ->set('areaFilter', (string) $areaA->id)
+            ->assertSee('Asset in A')
+            ->assertDontSee('Asset in B');
+    }
+
+    public function test_bundle_and_area_filters_work_with_search(): void
+    {
+        $bundle = Bundle::create(['name' => 'Target']);
+        $area = Area::create(['name' => 'Equities']);
+
+        Asset::create(['type' => 'Stock', 'name' => 'Alpha Corp', 'bundle_id' => $bundle->id, 'area_id' => $area->id]);
+        Asset::create(['type' => 'Stock', 'name' => 'Beta Corp', 'bundle_id' => $bundle->id]);
+        Asset::create(['type' => 'Stock', 'name' => 'Gamma Inc', 'area_id' => $area->id]);
+
+        Livewire::test('asset-widget')
+            ->assertSee('Alpha Corp')
+            ->assertSee('Beta Corp')
+            ->assertSee('Gamma Inc')
+            ->set('bundleFilter', (string) $bundle->id)
+            ->set('areaFilter', (string) $area->id)
+            ->set('search', 'Alpha')
+            ->assertSee('Alpha Corp')
+            ->assertDontSee('Beta Corp')
+            ->assertDontSee('Gamma Inc');
+    }
+
+    public function test_filter_resets_pagination(): void
+    {
+        for ($i = 0; $i < 15; $i++) {
+            Asset::create(['type' => 'Stock', 'name' => "Asset {$i}"]);
+        }
+
+        $component = Livewire::test('asset-widget');
+
+        $component->assertSee('Asset 0');
+
+        $component->call('gotoPage', 2);
+
+        $component->set('search', 'Asset');
+        $component->assertSee('Asset 0');
+    }
+
+    public function test_asset_list_has_clear_search_button(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertSee('data-asset-clear-filters', false);
+        $response->assertSee('Clear');
+    }
+
+    public function test_clear_search_clears_filters_and_restores_unfiltered_list(): void
+    {
+        $bundle = Bundle::create(['name' => 'Target Bundle']);
+        $area = Area::create(['name' => 'Target Area']);
+
+        Asset::create(['type' => 'Stock', 'name' => 'Visible Asset']);
+        Asset::create(['type' => 'Stock', 'name' => 'Hidden Asset', 'bundle_id' => $bundle->id, 'area_id' => $area->id]);
+
+        Livewire::test('asset-widget')
+            ->set('search', 'Hidden')
+            ->set('bundleFilter', (string) $bundle->id)
+            ->set('areaFilter', (string) $area->id)
+            ->assertSee('Hidden Asset')
+            ->assertDontSee('Visible Asset')
+            ->call('clearFilters')
+            ->assertSet('search', '')
+            ->assertSet('bundleFilter', '')
+            ->assertSet('areaFilter', '')
+            ->assertSee('Visible Asset')
+            ->assertSee('Hidden Asset');
+    }
 }

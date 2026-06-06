@@ -98,8 +98,28 @@ class VariablesWidgetTest extends TestCase
 
         $response->assertSee('data-workbench-bottom-widget="variables"', false);
         $response->assertSee('data-variables-widget', false);
+        $response->assertSee('data-variables-update-button', false);
         $response->assertSee('Variables');
         $response->assertSee('Search variables');
+    }
+
+    public function test_variables_update_button_refreshes_list_without_toggling_form(): void
+    {
+        $component = Livewire::test('variables-widget')
+            ->set('showForm', true)
+            ->assertSet('showForm', true);
+
+        Variable::create([
+            'name' => 'manual_refresh_variable',
+            'value' => 'yes',
+            'group' => 'test',
+            'comment' => 'Manual refresh test.',
+        ]);
+
+        $component
+            ->call('$refresh')
+            ->assertSet('showForm', true)
+            ->assertSee('manual_refresh_variable');
     }
 
     public function test_variables_widget_is_not_a_workbench_tab(): void

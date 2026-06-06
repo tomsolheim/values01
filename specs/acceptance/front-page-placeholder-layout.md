@@ -46,6 +46,10 @@
 - Each Status tab row shows the bundle name and asset count.
 - Bundles with no assets appear with count `0`.
 - The Status tab does not show create, edit, delete, import, export, or form controls at this stage.
+- The Status tab has an Update button in the title bar.
+- Pressing the Status tab Update button refreshes the bundle asset counts.
+- Pressing the Status tab Update button keeps the user on the Status tab.
+- The Status tab does not require automatic Livewire refresh at this stage.
 - Placeholder tabs show their matching `info` content; implemented tabs show their specified widgets.
 - The Variables CRUD widget appears below the tabbed workbench area.
 - The Variables CRUD widget remains visible regardless of which tab is active.
@@ -79,6 +83,8 @@
 - A feature or Livewire test confirms the Status tab lists bundles with asset counts.
 - A feature or Livewire test confirms bundles with no assets show count `0`.
 - A feature or browser test confirms the Status tab is read-only at this stage.
+- A feature or Livewire test confirms the Status tab Update button refreshes the bundle asset-count list.
+- A browser or Livewire test confirms the Status tab Update button keeps the user on the Status tab.
 - A feature or browser test confirms the Variables widget appears below the tabbed workbench and not as a tab.
 - A browser or visual test confirms the header-to-top-area spacing is compact.
 - A browser or Livewire test confirms placeholder tabs can reveal their matching `info` placeholder.

@@ -18,7 +18,10 @@ new class extends Component
 ?>
 
 <div data-status-widget>
-    <h5 class="mb-3">Status</h5>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h5 class="mb-0">Status</h5>
+        <button type="button" class="btn btn-sm btn-outline-secondary" wire:click="$refresh" data-status-update-button>Update</button>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-sm table-hover mb-0" data-status-bundle-counts>

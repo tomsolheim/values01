@@ -26,6 +26,8 @@ new class extends Component
     public $showForm = false;
     public $editId = null;
     public $search = '';
+    public $bundleFilter = '';
+    public $areaFilter = '';
     public $csvImport;
     public ?string $lookupMessage = null;
     public ?string $lookupPopupMessage = null;
@@ -261,6 +263,8 @@ new class extends Component
     {
         return Asset::query()
             ->with(['bundle', 'area'])
+            ->when(filled($this->bundleFilter), fn($q) => $q->where('bundle_id', $this->bundleFilter))
+            ->when(filled($this->areaFilter), fn($q) => $q->where('area_id', $this->areaFilter))
             ->when($this->search, function ($query) {
                 $query->where(function ($query) {
                     $query->where('type', 'like', "%{$this->search}%")
@@ -285,6 +289,29 @@ new class extends Component
     public function getAreasProperty()
     {
         return Area::query()->orderBy('name')->get();
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedBundleFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedAreaFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function clearFilters()
+    {
+        $this->search = '';
+        $this->bundleFilter = '';
+        $this->areaFilter = '';
+        $this->resetPage();
     }
 
     private function payload(): array
@@ -422,8 +449,29 @@ new class extends Component
         </form>
     @endif
 
-    <div class="mb-3">
-        <input type="text" class="form-control form-control-sm" placeholder="Search assets..." wire:model.live="search">
+    <div class="row g-2 mb-3">
+        <div class="col-md-4">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search assets..." wire:model.live="search">
+                <button class="btn btn-outline-secondary" type="button" wire:click="clearFilters" data-asset-clear-filters>Clear</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select form-select-sm" wire:model.live="bundleFilter" data-asset-bundle-filter>
+                <option value="">All bundles</option>
+                @foreach ($this->bundles as $bundle)
+                    <option value="{{ $bundle->id }}">{{ $bundle->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select form-select-sm" wire:model.live="areaFilter" data-asset-area-filter>
+                <option value="">All areas</option>
+                @foreach ($this->areas as $area)
+                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
     <div class="table-responsive">

@@ -8,6 +8,7 @@ use App\Models\Bundle;
 use App\Models\Transaction as TransactionModel;
 use App\Models\Variable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class FrontPageLayoutTest extends TestCase
@@ -249,9 +250,26 @@ class FrontPageLayoutTest extends TestCase
         $response = $this->get('/');
 
         $response->assertSee('data-status-widget', false);
+        $response->assertSee('data-status-update-button', false);
         $response->assertSee('data-status-bundle-counts', false);
         $response->assertSee('Bundle');
         $response->assertSee('Assets');
+    }
+
+    public function test_status_update_button_refreshes_bundle_asset_counts(): void
+    {
+        $bundle = Bundle::create(['name' => 'Refresh Bundle']);
+
+        $component = Livewire::test('status-widget')
+            ->assertSee('Refresh Bundle')
+            ->assertSee('0');
+
+        Asset::create(['type' => 'Stock', 'name' => 'Refresh Asset', 'bundle_id' => $bundle->id]);
+
+        $component
+            ->call('$refresh')
+            ->assertSee('Refresh Bundle')
+            ->assertSee('1');
     }
 
     public function test_status_tab_shows_bundle_asset_counts_including_zero(): void

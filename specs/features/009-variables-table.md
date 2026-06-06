@@ -95,6 +95,7 @@ The widget includes:
 - A form area for creating and editing variables.
 - A list area for viewing existing variables.
 - A heading show/hide button that affects only the form area.
+- An Update button in the title bar for manually refreshing the variables list.
 - A search field for the list.
 - Pagination for the list.
 - Edit and Delete row actions.
@@ -118,6 +119,16 @@ Expected controls:
 - Save button
 - Cancel or reset button when editing
 - Show/hide form button in the widget heading
+- Update button in the widget title bar
+
+### Manual Refresh
+
+- The Variables CRUD widget has an Update button in the title bar.
+- The Update button manually refreshes the variables list.
+- The Update button does not need to refresh automatically through polling or automatic Livewire updates at this stage.
+- Pressing Update should preserve the current visible state of the widget where possible.
+- Pressing Update should not hide or show the form by itself.
+- Pressing Update should not reset the active workbench tab.
 
 ### List
 

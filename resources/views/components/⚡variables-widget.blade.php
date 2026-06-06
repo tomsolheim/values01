@@ -160,9 +160,12 @@ new class extends Component
     <div class="card-body">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h5 class="mb-0">Variables</h5>
-            <button class="btn btn-sm btn-outline-secondary" wire:click="toggleForm" type="button">
-                {{ $showForm ? 'Hide form' : 'Show form' }}
-            </button>
+            <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-outline-secondary" wire:click="$refresh" type="button" data-variables-update-button>Update</button>
+                <button class="btn btn-sm btn-outline-secondary" wire:click="toggleForm" type="button">
+                    {{ $showForm ? 'Hide form' : 'Show form' }}
+                </button>
+            </div>
         </div>
 
         @if ($showForm)

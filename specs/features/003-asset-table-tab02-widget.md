@@ -260,6 +260,31 @@ Configuration:
 The widget includes a list or table of existing assets.
 The list uses pagination.
 The list includes a search field.
+The list includes separate Bundle and Area filters.
+
+### List Search and Filters
+
+- The existing search field remains available for broad text search across the searchable asset fields.
+- Add a Bundle filter dropdown.
+- Add an Area filter dropdown.
+- Add a Clear Search button beside the search and filter controls.
+- The Bundle filter options are populated from the `bundles` table.
+- The Area filter options are populated from the `areas` table.
+- The default Bundle option is `All bundles`.
+- The default Area option is `All areas`.
+- Selecting a Bundle shows only assets with the matching `bundle_id`.
+- Selecting an Area shows only assets with the matching `area_id`.
+- Search, Bundle filter, and Area filter may be used together.
+- When used together, an asset must match the selected Bundle, selected Area, and search text.
+- Changing the search text, Bundle filter, or Area filter resets the asset list to the first pagination page.
+- Pressing Clear Search clears the broad search field.
+- Pressing Clear Search resets the Bundle filter to `All bundles`.
+- Pressing Clear Search resets the Area filter to `All areas`.
+- Pressing Clear Search resets the asset list to the first pagination page.
+- Pressing Clear Search immediately restores the unfiltered asset list.
+- Pressing Clear Search must keep the user on the Assets tab.
+- Filtering must keep the user on the Assets tab.
+- The filters affect only the asset list and do not change values in the asset form.
 
 Visible columns:
 
@@ -292,6 +317,8 @@ Included:
 - Local mapping from lookup result to asset form fields
 - Daily lookup quota counter using `variables.isin_counter`
 - Pagination for the asset list
+- Bundle and Area filters for the asset list
+- Clear Search control for resetting asset search and filters
 - Show/hide form button in the widget heading
 - Shared CRUD list behavior from `008-shared-crud-list-behavior`
 
@@ -302,7 +329,7 @@ Not included:
 - Automatic Area creation from lookup
 - Live price lookup
 - Ticker validation against live exchanges
-- Advanced filtering
+- Advanced filtering beyond Bundle and Area
 - Authorization rules
 
 ## UI Notes

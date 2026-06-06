@@ -18,6 +18,10 @@
 - The Variables CRUD widget is below the main tabbed workbench content.
 - The Variables CRUD widget is not a workbench tab.
 - The Variables form uses the labels `Name`, `Value`, `Group`, and `Comment`.
+- The Variables widget has an Update button in the title bar.
+- Pressing the Variables Update button refreshes the variables list.
+- Pressing the Variables Update button does not hide or show the form by itself.
+- The Variables widget does not require automatic Livewire refresh at this stage.
 - The Variables widget can create a variable.
 - The Variables widget can list existing variables.
 - The Variables widget can edit an existing variable.
@@ -35,5 +39,7 @@
 - A feature or Livewire test confirms `isin_counter` exists with initial value `20`.
 - A feature or Livewire test confirms Asset ISIN Lookup can read and update `isin_counter`.
 - A feature or browser test confirms the Variables widget appears below the tabbed workbench.
+- A feature or Livewire test confirms the Variables Update button refreshes the variables list.
+- A feature or Livewire test confirms the Variables Update button does not hide or show the form by itself.
 - A feature or Livewire test confirms variables can be created, listed, updated, and deleted.
 - A feature or browser test confirms the Variables list follows shared CRUD behavior.

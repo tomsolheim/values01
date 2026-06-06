@@ -224,6 +224,10 @@ Initial purpose icons:
 - The list is read-only in this first implementation.
 - No create, edit, delete, import, export, or form controls are included in the Status tab at this stage.
 - The list should use compact Bootstrap 5 table or list styling suitable for the workbench.
+- The Status tab has an Update button in the title bar.
+- The Update button manually refreshes the bundle asset-count list.
+- The Status tab does not need automatic Livewire refresh at this stage.
+- Pressing Update must keep the user on the Status tab.
 - The Status tab must follow the same tab-persistence rules as the other workbench tabs.
 
 Tab registry:
