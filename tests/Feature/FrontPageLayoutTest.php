@@ -172,7 +172,7 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('data-card-toggle-control="system-status"', false);
         $response->assertDontSee('data-card-toggle-control="side02"', false);
         $response->assertSee('data-card-toggle-control="workbench"', false);
-        $response->assertSee('data-card-toggle-control="variables"', false);
+        $response->assertDontSee('data-card-toggle-control="variables"', false);
     }
 
     public function test_card_selector_targets_registered_visible_panels(): void
@@ -187,18 +187,17 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('data-card-toggle="system-status"', false);
         $response->assertDontSee('data-card-toggle="side02"', false);
         $response->assertSee('data-card-toggle="workbench"', false);
-        $response->assertSee('data-card-toggle="variables"', false);
+        $response->assertDontSee('data-card-toggle="variables"', false);
     }
 
-    public function test_card_selector_has_separate_workbench_and_variables_controls(): void
+    public function test_card_selector_controls_variables_through_workbench_only(): void
     {
         $response = $this->get('/');
 
         $response->assertSee('data-card-toggle-control="workbench"', false);
-        $response->assertSee('data-card-toggle-control="variables"', false);
         $response->assertSee('data-card-toggle="workbench"', false);
-        $response->assertSee('data-card-toggle="variables"', false);
-        $response->assertSeeInOrder(['data-card-toggle="workbench"', 'data-card-toggle="variables"'], false);
+        $response->assertDontSee('data-card-toggle-control="variables"', false);
+        $response->assertDontSee('data-card-toggle="variables"', false);
     }
 
     public function test_card_selector_does_not_control_top01(): void
@@ -221,8 +220,8 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('Holdings');
         $response->assertSee('History');
         $response->assertSee('Import');
-        $response->assertSee('tab08');
-        $response->assertSee('tab09');
+        $response->assertSee('Links');
+        $response->assertSee('Variables');
         $response->assertSee('tab10');
     }
 
@@ -239,10 +238,13 @@ class FrontPageLayoutTest extends TestCase
     {
         $response = $this->get('/');
 
-        foreach ([5, 6, 8, 9, 10] as $i) {
+        foreach ([5, 6, 10] as $i) {
             $num = str_pad((string) $i, 2, '0', STR_PAD_LEFT);
             $response->assertSeeText("info{$num}");
         }
+
+        $response->assertDontSeeText('info08');
+        $response->assertDontSeeText('info09');
     }
 
     public function test_tab01_shows_status_widget(): void
@@ -285,6 +287,52 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSeeInOrder(['Filled Bundle', '2']);
     }
 
+    public function test_status_tab_assets_column_header_and_counts_are_centered(): void
+    {
+        $bundle = Bundle::create(['name' => 'Centered Bundle']);
+        Asset::create(['type' => 'Stock', 'name' => 'Asset One', 'bundle_id' => $bundle->id]);
+
+        $response = $this->get('/');
+
+        $response->assertSee('<th class="text-center">Assets</th>', false);
+        $response->assertSee('<td class="text-center fw-semibold">1</td>', false);
+    }
+
+    public function test_status_tab_shows_bundle_comments_margin_and_bundle_links(): void
+    {
+        $bundle = Bundle::create(['name' => 'Linked Bundle', 'comment' => 'Shown to the right']);
+
+        $response = $this->get('/');
+
+        $response->assertSee('mx-md-5', false);
+        $response->assertSee('data-status-bundle-link="'.$bundle->id.'"', false);
+        $response->assertSee('values01OpenAssetsTabFromStatus', false);
+        $response->assertSeeInOrder(['Linked Bundle', '0', 'Shown to the right']);
+    }
+
+    public function test_status_to_assets_navigation_activates_tab_hash_and_bundle_filter_focus(): void
+    {
+        Bundle::create(['name' => 'Navigation Bundle']);
+
+        $response = $this->get('/');
+
+        $response->assertSee('window.values01OpenAssetsTabFromStatus', false);
+        $response->assertSee("document.getElementById('tab02-tab')", false);
+        $response->assertSee("window.bootstrap.Tab.getOrCreateInstance(assetsTab).show()", false);
+        $response->assertSee("history.replaceState(null, '', '#tab02')", false);
+        $response->assertSee("document.querySelector('[data-asset-bundle-filter]')", false);
+        $response->assertSee('bundleFilter.focus()', false);
+    }
+
+    public function test_status_bundle_action_dispatches_asset_filter_event(): void
+    {
+        $bundle = Bundle::create(['name' => 'Dispatch Bundle']);
+
+        Livewire::test('status-widget')
+            ->call('selectBundle', $bundle->id)
+            ->assertDispatched('status-bundle-selected', bundleId: (string) $bundle->id);
+    }
+
     public function test_tab07_shows_transaction_import_widget(): void
     {
         $response = $this->get('/');
@@ -293,8 +341,13 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('Transaction Import');
         $response->assertSee('All ISINs');
         $response->assertSee('One ISIN');
+        $response->assertSee('Selected ISIN');
+        $response->assertSee('Choose existing asset ISIN');
         $response->assertSee('ISIN filter');
         $response->assertSee('Add assets');
+        $response->assertSee('Transactions: 0');
+        $response->assertSee('Refresh');
+        $response->assertSee('Delete all transactions');
     }
 
     public function test_tab02_shows_asset_widget(): void
@@ -324,6 +377,20 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('Comment');
     }
 
+    public function test_tab08_shows_links_widget(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertSee('Links');
+        $response->assertSee('data-links-widget', false);
+        $response->assertSee('Show form');
+        $response->assertSee('Search links');
+        $response->assertSee('All groups');
+        $response->assertSee('Reset Search');
+        $response->assertSee('Import CSV');
+        $response->assertSee('Export CSV');
+    }
+
     public function test_tab_persistence_js_is_present(): void
     {
         $response = $this->get('/');
@@ -341,10 +408,13 @@ class FrontPageLayoutTest extends TestCase
         $response->assertSee('getOrCreateInstance');
     }
 
-    public function test_variables_widget_appears_below_workbench_tabs(): void
+    public function test_variables_widget_appears_inside_tab09(): void
     {
         $response = $this->get('/');
 
-        $response->assertSeeInOrder(['id="workbenchTabContent"', 'data-workbench-bottom-widget="variables"'], false);
+        $response->assertSee('id="tab09"', false);
+        $response->assertSee('id="tab09-tab"', false);
+        $response->assertSeeInOrder(['id="tab09"', 'data-variables-widget'], false);
+        $response->assertDontSee('data-workbench-bottom-widget="variables"', false);
     }
 }

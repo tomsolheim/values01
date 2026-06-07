@@ -131,8 +131,9 @@ class TransactionImportService
     private function createAssetFromRow(array $row): bool
     {
         $name = $this->blankToNull($row['Verdipapir'] ?? null);
+        $isin = $this->blankToNull($row['ISIN'] ?? null);
 
-        if (!$name || Asset::query()->where('name', $name)->exists()) {
+        if (!$name || !$isin || Asset::query()->where('name', $name)->exists()) {
             return false;
         }
 
@@ -141,7 +142,7 @@ class TransactionImportService
 
         Asset::create([
             'type' => 'Stock',
-            'isin' => $this->blankToNull($row['ISIN'] ?? null),
+            'isin' => $isin,
             'name' => $name,
             'bundle_id' => $bundle->id,
             'area_id' => $area->id,

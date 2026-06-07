@@ -6,9 +6,11 @@ use App\Models\Area;
 use App\Models\Asset;
 use App\Models\Bundle;
 use App\Models\Transaction as TransactionModel;
+use App\Models\Variable;
 use App\Services\TransactionImportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class TransactionImportTest extends TestCase
@@ -135,7 +137,70 @@ class TransactionImportTest extends TestCase
         $this->assertDatabaseMissing('assets', ['name' => 'Company Two']);
     }
 
-    private function sampleFile(): string
+    public function test_add_assets_does_not_create_assets_without_isin(): void
+    {
+        $result = app(TransactionImportService::class)->import($this->sampleFile([
+            ['4', '04.06.2026', '', '', 'P1', 'Utbytte', 'Named Cash Movement', '', '', '', '', '', '', '12,50', 'NOK', '', '', '', '', '', '', '', 'Dividend', '', '', '', '', '', '', ''],
+        ]), null, true);
+
+        $this->assertSame(2, $result['assetsCreated']);
+        $this->assertDatabaseMissing('assets', ['name' => 'Named Cash Movement']);
+    }
+
+    public function test_import_widget_shows_current_transaction_count(): void
+    {
+        TransactionModel::create(['source_id' => 'count-1']);
+        TransactionModel::create(['source_id' => 'count-2']);
+
+        Livewire::test('transaction-import-widget')
+            ->assertSet('transactionCount', 2)
+            ->assertSee('Transactions: 2');
+    }
+
+    public function test_import_widget_refresh_updates_transaction_count(): void
+    {
+        $component = Livewire::test('transaction-import-widget')
+            ->assertSet('transactionCount', 0);
+
+        TransactionModel::create(['source_id' => 'refresh-1']);
+
+        $component
+            ->call('refreshTransactionCount')
+            ->assertSet('transactionCount', 1)
+            ->assertSee('Transactions: 1');
+    }
+
+    public function test_import_widget_delete_all_requires_confirmation_markup(): void
+    {
+        Livewire::test('transaction-import-widget')
+            ->assertSee('Delete all transactions')
+            ->assertSee('wire:confirm="All transaction records will be permanently deleted. This cannot be undone. Continue?"', false);
+    }
+
+    public function test_import_widget_delete_all_removes_only_transactions_and_updates_count(): void
+    {
+        TransactionModel::create(['source_id' => 'delete-1']);
+        TransactionModel::create(['source_id' => 'delete-2']);
+        $bundle = Bundle::create(['name' => 'Keep Bundle']);
+        $area = Area::create(['name' => 'Keep Area']);
+        Asset::create(['type' => 'Stock', 'name' => 'Keep Asset', 'bundle_id' => $bundle->id, 'area_id' => $area->id]);
+        Variable::create(['name' => 'keep_variable', 'value' => '1', 'group' => 'test', 'comment' => 'Keep variable.']);
+
+        Livewire::test('transaction-import-widget')
+            ->assertSet('transactionCount', 2)
+            ->call('deleteAllTransactions')
+            ->assertSet('transactionCount', 0)
+            ->assertSee('Transactions: 0')
+            ->assertSee('All transaction records were permanently deleted.');
+
+        $this->assertSame(0, TransactionModel::count());
+        $this->assertDatabaseHas('bundles', ['name' => 'Keep Bundle']);
+        $this->assertDatabaseHas('areas', ['name' => 'Keep Area']);
+        $this->assertDatabaseHas('assets', ['name' => 'Keep Asset']);
+        $this->assertDatabaseHas('variables', ['name' => 'keep_variable']);
+    }
+
+    private function sampleFile(array $extraRows = []): string
     {
         $headers = [
             'Id', 'Bokføringsdag', 'Handelsdag', 'Oppgjørsdag', 'Portefølje', 'Transaksjonstype',
@@ -150,6 +215,8 @@ class TransactionImportTest extends TestCase
             ['2', '02.06.2026', '02.06.2026', '04.06.2026', 'P1', 'Salg', 'Company Two', 'SE000000002', '2', '50', '', '0', 'NOK', '100', 'NOK', '90', 'NOK', '10', 'NOK', '0', '100', '1', 'Text', '', 'CN2', 'VN2', '0', 'NOK', '1', ''],
             ['3', '03.06.2026', '', '', 'P1', 'Avgift', '', '', '', '', '', '', '', '-25,50', 'NOK', '', '', '', '', '', '', '', 'Fee', '', '', '', '', '', '', ''],
         ];
+
+        $rows = array_merge($rows, $extraRows);
 
         $contents = implode("\n", array_map(fn($row) => implode("\t", $row), array_merge([$headers], $rows)));
         $path = tempnam(sys_get_temp_dir(), 'values-import-');

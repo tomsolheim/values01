@@ -6,6 +6,7 @@ use App\Models\Bundle;
 use App\Models\Variable;
 use App\Services\AssetLookupService;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -310,6 +311,15 @@ new class extends Component
     {
         $this->search = '';
         $this->bundleFilter = '';
+        $this->areaFilter = '';
+        $this->resetPage();
+    }
+
+    #[On('status-bundle-selected')]
+    public function filterByBundleFromStatus(string $bundleId): void
+    {
+        $this->search = '';
+        $this->bundleFilter = $bundleId;
         $this->areaFilter = '';
         $this->resetPage();
     }

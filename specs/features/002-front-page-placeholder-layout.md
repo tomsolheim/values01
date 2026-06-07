@@ -144,11 +144,8 @@ Initial purpose icons:
   - A dropdown or compact list of checkboxes for individual cards.
 - Each controlled card or widget panel uses a stable card id.
 - Only cards explicitly registered with the Card Selector are affected by it.
-- The tabbed workbench card and the Variables card are separate Card Selector entries.
 - The tabbed workbench card uses its own stable card id.
-- The Variables card uses its own stable card id.
-- Toggling the tabbed workbench card must not toggle the Variables card.
-- Toggling the Variables card must not toggle the tabbed workbench card.
+- Because Variables is inside `tab09`, it is controlled as part of the tabbed workbench card rather than as a separate Card Selector entry.
 - Card visibility controls should stay in sync with the visible cards.
 - The widget should adapt visually to the Values01 Bootstrap 5 layout.
 - The exact list of controlled cards is TBS before final implementation.
@@ -205,10 +202,10 @@ Initial purpose icons:
 - Tab persistence applies to pagination, search, edit, delete, save, cancel, and form show/hide actions.
 - Interacting with a widget inside one tab must not reset the workbench back to `tab01`.
 - If the page reloads or a server round-trip occurs, the application should restore the previously active tab when possible.
-- A separate Variables CRUD widget appears at the bottom of the workbench below the tabbed area.
-- The Variables CRUD widget is not part of the tab set.
-- The Variables CRUD widget remains visible below the tabs regardless of the active tab.
-- The tabbed workbench area and the Variables CRUD widget are separate cards or widget panels for Card Selector purposes.
+- The Variables CRUD widget appears inside `tab09`.
+- The visible label for `tab09` is `Variables`.
+- The Variables widget is visible when the Variables tab is active.
+- Variables interactions follow the same active-tab persistence rules as other tabbed CRUD widgets.
 
 ### Status Tab
 
@@ -219,8 +216,24 @@ Initial purpose icons:
 - Each row shows:
   - Bundle name
   - Count of assets assigned to that bundle
+  - Bundle comment, displayed to the right
+- The Assets count column header and all count values are horizontally centered.
+- Centering applies only to the Assets count column; Bundle name and Comment keep their normal text alignment.
 - Asset counts are calculated from the `assets.bundle_id` relationship.
 - Bundles with no assets should still appear with count `0`.
+- The table has approximately `5%` horizontal margin on both the left and right sides of its available content area.
+- The table width is therefore approximately `90%` of the available Status-tab content width.
+- On small screens, responsive Bootstrap behavior may reduce or remove these margins when necessary to keep the table usable.
+- The Bundle name is a clickable link or link-style action.
+- Clicking a Bundle name opens the Assets tab (`tab02`).
+- Opening the Assets tab means `tab02` becomes the active Bootstrap tab and its content pane becomes visible immediately.
+- The Status tab must no longer remain visually active after the Bundle link is clicked.
+- The tab button state, content-pane state, and persisted tab state or URL hash must all identify `tab02` as active.
+- The clicked Bundle is selected in the Asset list Bundle filter.
+- The Asset list then shows assets assigned to the selected Bundle.
+- After the tab switch and filter update, keyboard focus moves to the Asset Bundle filter so the user is clearly positioned in the Assets widget.
+- Navigation from Status clears the Asset broad-search field and resets the Area filter to `All areas`, so the selected Bundle determines the resulting list.
+- Navigation from Status resets Asset pagination to the first page.
 - The list is read-only in this first implementation.
 - No create, edit, delete, import, export, or form controls are included in the Status tab at this stage.
 - The list should use compact Bootstrap 5 table or list styling suitable for the workbench.
@@ -241,8 +254,8 @@ Tab registry:
 | `tab05` | `Holdings` | Holdings form/list widget |
 | `tab06` | `History` | History list widget |
 | `tab07` | `Import` | Transaction import widget |
-| `tab08` | `tab08` | `info08` placeholder |
-| `tab09` | `tab09` | `info09` placeholder |
+| `tab08` | `Links` | Links form/list widget |
+| `tab09` | `Variables` | Variables CRUD widget |
 | `tab10` | `tab10` | `info10` placeholder |
 
 ## Scope
@@ -256,7 +269,7 @@ Included:
 - 3-column sidebar
 - Sidebar widgets: Card Selector, Time, Git Status, and System Status
 - 9-column workbench
-- Bottom-of-workbench Variables CRUD widget
+- Variables CRUD widget in `tab09`
 - Card Selector in the `side01` position
 - Table Size in the `top08` position
 - Instance Info in the `top09` position
@@ -291,4 +304,4 @@ Not included:
 - Placeholder cards should make their region names visible.
 - Widgets should not introduce unrelated dependencies.
 - Widgets should not break the 12-column top area or 3-column sidebar layout.
-- Card Selector registration should treat the tabbed workbench and Variables widget as distinct selectable cards.
+- Card Selector controls Variables through the tabbed workbench card; Variables is not a separate selector-controlled card.

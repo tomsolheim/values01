@@ -57,10 +57,10 @@
                         <button class="nav-link" id="tab07-tab" data-bs-toggle="tab" data-bs-target="#tab07" type="button" role="tab">Import</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="tab08-tab" data-bs-toggle="tab" data-bs-target="#tab08" type="button" role="tab">tab08</button>
+                        <button class="nav-link" id="tab08-tab" data-bs-toggle="tab" data-bs-target="#tab08" type="button" role="tab">Links</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="tab09-tab" data-bs-toggle="tab" data-bs-target="#tab09" type="button" role="tab">tab09</button>
+                        <button class="nav-link" id="tab09-tab" data-bs-toggle="tab" data-bs-target="#tab09" type="button" role="tab">Variables</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="tab10-tab" data-bs-toggle="tab" data-bs-target="#tab10" type="button" role="tab">tab10</button>
@@ -90,19 +90,15 @@
                     <livewire:transaction-import-widget />
                 </div>
                 <div class="tab-pane fade" id="tab08" role="tabpanel">
-                    <p class="text-muted small mb-0">info08</p>
+                    <livewire:links-widget />
                 </div>
                 <div class="tab-pane fade" id="tab09" role="tabpanel">
-                    <p class="text-muted small mb-0">info09</p>
+                    <livewire:variables-widget />
                 </div>
                 <div class="tab-pane fade" id="tab10" role="tabpanel">
                     <p class="text-muted small mb-0">info10</p>
                 </div>
                 </div>
-            </div>
-
-            <div class="mt-3" data-workbench-bottom-widget="variables" data-card-toggle="variables">
-                <livewire:variables-widget />
             </div>
         </div>
     </div>
@@ -119,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (triggerEl) {
-        bootstrap.Tab.getOrCreateInstance(triggerEl).show();
+        window.bootstrap.Tab.getOrCreateInstance(triggerEl).show();
     }
 
     document.querySelectorAll('#workbenchTabs [data-bs-toggle="tab"]').forEach(function (tab) {
@@ -127,6 +123,23 @@ document.addEventListener('DOMContentLoaded', function () {
             history.replaceState(null, '', e.target.getAttribute('data-bs-target'));
         });
     });
+
+    window.values01OpenAssetsTabFromStatus = function () {
+        var assetsTab = document.getElementById('tab02-tab');
+
+        if (assetsTab && window.bootstrap) {
+            window.bootstrap.Tab.getOrCreateInstance(assetsTab).show();
+            history.replaceState(null, '', '#tab02');
+        }
+
+        window.setTimeout(function () {
+            var bundleFilter = document.querySelector('[data-asset-bundle-filter]');
+
+            if (bundleFilter) {
+                bundleFilter.focus();
+            }
+        }, 0);
+    };
 });
 </script>
 @endpush

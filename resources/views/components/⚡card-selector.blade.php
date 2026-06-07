@@ -14,7 +14,6 @@ new class extends Component
                 ['id' => 'git-status', 'label' => 'Git Status'],
                 ['id' => 'system-status', 'label' => 'System Status'],
                 ['id' => 'workbench', 'label' => 'Workbench'],
-                ['id' => 'variables', 'label' => 'Variables'],
             ],
         ];
     }

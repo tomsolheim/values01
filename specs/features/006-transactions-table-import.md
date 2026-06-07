@@ -203,6 +203,32 @@ In the first implementation step:
 - `tab07` no longer only shows `info07`.
 - `tab07` shows the transaction import widget.
 
+## Transaction Table Maintenance
+
+The Import tab includes a compact transaction table status and maintenance area.
+
+Record count:
+
+- Show the current number of records in the `transactions` table.
+- The count should be clearly labelled, for example `Transactions: 116`.
+- The displayed count is not required to update automatically through Livewire polling at this stage.
+- Add a Refresh button beside the displayed count.
+- Pressing Refresh reads the current transaction count from the database.
+- Pressing Refresh must keep the user on the Import tab.
+- A successful transaction import should update the displayed count.
+
+Delete all:
+
+- Add a `Delete all transactions` button.
+- The button deletes every record from the `transactions` table.
+- The action affects only transaction records; it must not delete Assets, Bundles, Areas, Variables, or imported source files.
+- The action is destructive and must require explicit confirmation before deletion.
+- The confirmation must clearly state that all transaction records will be permanently deleted.
+- Cancelling confirmation must leave all transaction data unchanged.
+- After successful deletion, the displayed transaction count must show `0`.
+- After deletion, show a clear success message.
+- Pressing or cancelling the action must keep the user on the Import tab.
+
 ## Scope
 
 Included:
@@ -214,6 +240,8 @@ Included:
 - Relationship to Asset ISIN
 - Asset creation from import
 - Transaction import widget in `tab07`
+- Transaction record count with manual Refresh button
+- Confirmed delete-all-transactions action
 
 Not included:
 
@@ -222,12 +250,13 @@ Not included:
 - Import preview design
 - Error reporting design
 - Undo import
+- Undo delete-all-transactions
 - Duplicate transaction handling beyond unique `source_id`
 
 ## Open Questions
 
 - Should import show a preview before saving?
-- Should import support deleting or rolling back a full imported batch?
+- Should import support deleting or rolling back one imported batch?
 - Should transactions without ISIN be linked to an internal asset later?
 - Should the add-assets function be a separate button or an option during transaction import?
 - Should duplicate asset checking use only name, or later include ISIN as an additional duplicate guard?

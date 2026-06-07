@@ -29,6 +29,17 @@
 - Imported assets use Bundle `Import`.
 - Imported assets use Area `Unknown`.
 - Rows without company/security name do not create assets.
+- The Import tab shows the current number of records in the `transactions` table.
+- The Import tab has a Refresh button beside the transaction count.
+- Pressing Refresh updates the count from the database and keeps the Import tab active.
+- A successful import updates the displayed transaction count.
+- The Import tab has a `Delete all transactions` button.
+- Delete all requires explicit confirmation that all transaction records will be permanently deleted.
+- Cancelling deletion leaves transaction data unchanged.
+- Confirming deletion removes all records from `transactions` only.
+- Delete all does not remove Assets, Bundles, Areas, Variables, or source files.
+- After deletion, the displayed transaction count is `0` and a success message is shown.
+- The transaction count does not require automatic Livewire polling at this stage.
 
 ## Suggested Tests
 
@@ -44,6 +55,13 @@
 - A feature or Livewire test confirms the add-assets function can create missing assets from rows whose transactions were skipped as duplicate `source_id` values.
 - A feature or Livewire test confirms existing asset names are not duplicated.
 - A feature or Livewire test confirms imported assets are assigned type `Stock`, Bundle `Import`, and Area `Unknown`.
+- A feature or Livewire test confirms the displayed transaction count matches the database.
+- A feature or Livewire test confirms Refresh updates the transaction count.
+- A browser or Livewire test confirms Refresh keeps the Import tab active.
+- A feature or Livewire test confirms delete-all requires confirmation.
+- A feature or Livewire test confirms cancelling delete-all preserves transactions.
+- A feature or Livewire test confirms confirmed delete-all removes transactions without deleting related application data.
+- A feature or Livewire test confirms the displayed count becomes `0` after deletion.
 
 ## Open Acceptance Items
 

@@ -92,15 +92,18 @@ class VariablesWidgetTest extends TestCase
         $this->assertDatabaseMissing('variables', ['name' => 'delete_me']);
     }
 
-    public function test_front_page_shows_variables_widget_below_tabbed_workbench(): void
+    public function test_front_page_shows_variables_widget_in_tab09(): void
     {
         $response = $this->get('/');
 
-        $response->assertSee('data-workbench-bottom-widget="variables"', false);
+        $response->assertSee('id="tab09-tab"', false);
+        $response->assertSee('data-bs-target="#tab09"', false);
         $response->assertSee('data-variables-widget', false);
         $response->assertSee('data-variables-update-button', false);
         $response->assertSee('Variables');
         $response->assertSee('Search variables');
+        $response->assertDontSee('data-workbench-bottom-widget="variables"', false);
+        $response->assertDontSee('data-card-toggle="variables"', false);
     }
 
     public function test_variables_update_button_refreshes_list_without_toggling_form(): void
@@ -122,10 +125,12 @@ class VariablesWidgetTest extends TestCase
             ->assertSee('manual_refresh_variable');
     }
 
-    public function test_variables_widget_is_not_a_workbench_tab(): void
+    public function test_variables_widget_is_workbench_tab09_not_variables_tab(): void
     {
         $response = $this->get('/');
 
+        $response->assertSee('id="tab09-tab"', false);
+        $response->assertSee('data-bs-target="#tab09"', false);
         $response->assertDontSee('id="variables-tab"', false);
         $response->assertDontSee('data-bs-target="#variables"', false);
     }

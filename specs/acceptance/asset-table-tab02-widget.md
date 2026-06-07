@@ -72,6 +72,10 @@
 - Pressing Clear Search keeps the Assets tab active.
 - Using the filters keeps the user on the Assets tab.
 - Using the filters does not change values in the asset form.
+- Clicking a Bundle link in the Status tab opens Assets with the corresponding Bundle filter selected.
+- The Status link activates and displays the Assets Bootstrap tab; changing only the hidden filter state is not sufficient.
+- Keyboard focus moves to the Asset Bundle filter after the tab is activated.
+- Status-to-Assets navigation clears broad search, resets Area to `All areas`, and resets pagination.
 - The asset list is paginated.
 
 ## Suggested Tests

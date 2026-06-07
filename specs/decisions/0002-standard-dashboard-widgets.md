@@ -18,7 +18,7 @@ Define these widgets as Values01 components:
 - Time in the sidebar
 - Git Status in the sidebar
 - System Status in the sidebar
-- Variables CRUD at the bottom of the workbench
+- Variables CRUD in workbench `tab09`, labelled `Variables`
 
 ## Consequences
 

@@ -285,6 +285,10 @@ The list includes separate Bundle and Area filters.
 - Pressing Clear Search must keep the user on the Assets tab.
 - Filtering must keep the user on the Assets tab.
 - The filters affect only the asset list and do not change values in the asset form.
+- The Bundle filter may also be set by navigation from a Bundle link in the Status tab.
+- When set from Status, the Asset broad search is cleared, Area is reset to `All areas`, pagination returns to page one, and the Assets tab becomes the visibly active Bootstrap tab.
+- The Assets tab content pane must be displayed immediately; updating a hidden Asset component alone does not satisfy this requirement.
+- After navigation, keyboard focus is placed on the Asset Bundle filter.
 
 Visible columns:
 

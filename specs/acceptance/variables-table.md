@@ -14,9 +14,10 @@
 - `isin_counter` has group `lookup`.
 - `isin_counter` starts with value `20`.
 - Asset ISIN Lookup can read and update `isin_counter`.
-- The Variables CRUD widget appears at the bottom of the workbench.
-- The Variables CRUD widget is below the main tabbed workbench content.
-- The Variables CRUD widget is not a workbench tab.
+- The Variables CRUD widget appears in `tab09`.
+- The visible label for `tab09` is `Variables`.
+- The Variables widget is not rendered separately below the workbench tabs.
+- Variables widget interactions keep `tab09` active.
 - The Variables form uses the labels `Name`, `Value`, `Group`, and `Comment`.
 - The Variables widget has an Update button in the title bar.
 - Pressing the Variables Update button refreshes the variables list.
@@ -38,7 +39,8 @@
 - A feature or Livewire test confirms System Status falls back safely when `vmware_cores` is missing.
 - A feature or Livewire test confirms `isin_counter` exists with initial value `20`.
 - A feature or Livewire test confirms Asset ISIN Lookup can read and update `isin_counter`.
-- A feature or browser test confirms the Variables widget appears below the tabbed workbench.
+- A feature or browser test confirms the Variables widget appears in `tab09`.
+- A feature or browser test confirms the Variables widget is not duplicated below the tabbed workbench.
 - A feature or Livewire test confirms the Variables Update button refreshes the variables list.
 - A feature or Livewire test confirms the Variables Update button does not hide or show the form by itself.
 - A feature or Livewire test confirms variables can be created, listed, updated, and deleted.

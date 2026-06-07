@@ -428,4 +428,26 @@ class AssetWidgetTest extends TestCase
             ->assertSee('Visible Asset')
             ->assertSee('Hidden Asset');
     }
+
+    public function test_status_to_assets_navigation_sets_bundle_filter_and_resets_other_filters(): void
+    {
+        $targetBundle = Bundle::create(['name' => 'Target Bundle']);
+        $otherBundle = Bundle::create(['name' => 'Other Bundle']);
+        $area = Area::create(['name' => 'Filtered Area']);
+
+        Asset::create(['type' => 'Stock', 'name' => 'Target Asset', 'bundle_id' => $targetBundle->id]);
+        Asset::create(['type' => 'Stock', 'name' => 'Other Asset', 'bundle_id' => $otherBundle->id]);
+        Asset::create(['type' => 'Stock', 'name' => 'Area Asset', 'bundle_id' => $targetBundle->id, 'area_id' => $area->id]);
+
+        Livewire::test('asset-widget')
+            ->set('search', 'Other')
+            ->set('areaFilter', (string) $area->id)
+            ->call('filterByBundleFromStatus', (string) $targetBundle->id)
+            ->assertSet('search', '')
+            ->assertSet('bundleFilter', (string) $targetBundle->id)
+            ->assertSet('areaFilter', '')
+            ->assertSee('Target Asset')
+            ->assertSee('Area Asset')
+            ->assertDontSee('Other Asset');
+    }
 }

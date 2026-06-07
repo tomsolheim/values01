@@ -14,6 +14,7 @@ Current CRUD widgets:
 - Bundle widget in `tab03`
 - Area widget in `tab04`
 - Holdings widget in `tab05`
+- Links widget in `tab08`
 
 Future CRUD widgets should follow this specification unless their own spec explicitly overrides it.
 

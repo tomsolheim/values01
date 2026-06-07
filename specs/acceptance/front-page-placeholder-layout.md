@@ -36,25 +36,34 @@
 - Card Selector visibility controls stay in sync with visible cards.
 - Card Selector does not control `top01`.
 - `top01` remains visible after using Card Selector `All off`.
-- Card Selector has separate controls for the tabbed workbench card and the Variables card.
-- Toggling the tabbed workbench card does not hide or show the Variables card.
-- Toggling the Variables card does not hide or show the tabbed workbench card.
+- Variables is controlled as part of the tabbed workbench card and is not a separate Card Selector entry.
 - The workbench has 10 stable internal tab ids named `tab01` through `tab10`.
-- The workbench shows visible tab labels `Status`, `Assets`, `Bundles`, `Areas`, `Holdings`, `History`, `Import`, `tab08`, `tab09`, and `tab10`.
+- The workbench shows visible tab labels `Status`, `Assets`, `Bundles`, `Areas`, `Holdings`, `History`, `Import`, `Links`, `Variables`, and `tab10`.
 - `tab01` is the Status tab.
 - The Status tab shows a read-only list of bundles.
-- Each Status tab row shows the bundle name and asset count.
+- Each Status tab row shows the bundle name, asset count, and bundle comment.
+- The bundle comment is displayed to the right of the count.
+- The Assets column header and all asset-count values are horizontally centered.
 - Bundles with no assets appear with count `0`.
+- The Status table uses approximately `5%` margin on its left and right sides on normal desktop widths.
+- Each Bundle name is a link or link-style action.
+- Clicking a Bundle name opens the Assets tab.
+- Clicking a Bundle name makes the Assets tab button active and its content pane visible immediately.
+- After clicking a Bundle name, the Status tab is no longer visually active.
+- The persisted active-tab state or URL hash is updated to `tab02`.
+- Clicking a Bundle name selects that Bundle in the Asset list Bundle filter.
+- Keyboard focus moves to the Asset Bundle filter after navigation.
+- Status-to-Assets navigation clears the Asset broad search, resets Area to `All areas`, and resets pagination to page one.
 - The Status tab does not show create, edit, delete, import, export, or form controls at this stage.
 - The Status tab has an Update button in the title bar.
 - Pressing the Status tab Update button refreshes the bundle asset counts.
 - Pressing the Status tab Update button keeps the user on the Status tab.
 - The Status tab does not require automatic Livewire refresh at this stage.
 - Placeholder tabs show their matching `info` content; implemented tabs show their specified widgets.
-- The Variables CRUD widget appears below the tabbed workbench area.
-- The Variables CRUD widget remains visible regardless of which tab is active.
-- The Variables CRUD widget is not rendered as an additional tab.
-- The tabbed workbench area and Variables CRUD widget are separate selector-controlled cards.
+- `tab09` is the Variables tab.
+- The Variables CRUD widget appears inside `tab09`.
+- The Variables widget is not rendered below the tabbed workbench.
+- Variables interactions keep the Variables tab active.
 - The active tab persists during interactions inside that tab.
 - Pagination inside a tab keeps the user on the same tab.
 - Search inside a tab keeps the user on the same tab.
@@ -78,14 +87,22 @@
 - A browser or visual test confirms the sidebar widget order.
 - A browser test confirms Card Selector can hide and show a registered card.
 - A browser test confirms Card Selector `All off` does not hide `top01`.
-- A browser test confirms the tabbed workbench card and Variables card can be toggled independently.
+- A browser test confirms Variables is controlled through the tabbed workbench card rather than a separate Card Selector entry.
 - A feature test confirms the front page contains the visible tab labels from the tab registry.
 - A feature or Livewire test confirms the Status tab lists bundles with asset counts.
+- A feature or Livewire test confirms the Status tab displays bundle comments.
 - A feature or Livewire test confirms bundles with no assets show count `0`.
+- A browser or visual test confirms the Assets column header and count values are centered.
+- A browser or visual test confirms the Status table has approximately `5%` margin on each side at desktop width.
+- A browser or Livewire test confirms clicking a Bundle opens the Assets tab with that Bundle filter selected.
+- A browser test confirms the Assets tab button and pane become active while the Status tab becomes inactive.
+- A browser test confirms keyboard focus moves to the Asset Bundle filter and the persisted tab state identifies `tab02`.
+- A browser or Livewire test confirms Status-to-Assets navigation clears other Asset search/filter state and resets pagination.
 - A feature or browser test confirms the Status tab is read-only at this stage.
 - A feature or Livewire test confirms the Status tab Update button refreshes the bundle asset-count list.
 - A browser or Livewire test confirms the Status tab Update button keeps the user on the Status tab.
-- A feature or browser test confirms the Variables widget appears below the tabbed workbench and not as a tab.
+- A feature or browser test confirms `tab09` is labelled `Variables` and contains the Variables CRUD widget.
+- A feature or browser test confirms the Variables widget does not also appear below the tabbed workbench.
 - A browser or visual test confirms the header-to-top-area spacing is compact.
 - A browser or Livewire test confirms placeholder tabs can reveal their matching `info` placeholder.
 - A browser or Livewire test confirms Bundle pagination keeps the user on the `Bundles` tab.

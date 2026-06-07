@@ -78,15 +78,15 @@ Fields:
 
 ## UI Placement
 
-The Variables CRUD widget appears in a separate widget area at the bottom of the workbench.
+The Variables CRUD widget appears in workbench `tab09`.
 
 Placement rules:
 
-- The widget is below the main tabbed workbench content.
-- The widget is visually part of the workbench column, not the sidebar.
-- The widget should remain below the tabs regardless of which tab is active.
-- The widget is not a workbench tab.
-- The widget may be controlled by Card Selector if it is explicitly registered in the card registry.
+- The visible tab label is `Variables`.
+- `tab09` no longer shows the `info09` placeholder.
+- The widget is part of the tabbed workbench and is not rendered separately below it.
+- Variables pagination, search, edit, delete, save, cancel, form show/hide, and Update actions must keep `tab09` active.
+- Card Selector controls Variables through the tabbed workbench card rather than through a separate Variables card entry.
 
 ## Variables CRUD Widget
 
@@ -153,7 +153,7 @@ Included:
 - Variables table specification
 - Initial `vmware_cores` runtime variable
 - Relationship to System Status
-- Variables CRUD widget at the bottom of the workbench
+- Variables CRUD widget in `tab09`
 - Shared CRUD list behavior
 
 Not included:
@@ -165,4 +165,3 @@ Not included:
 
 - Should `value` remain a string or support typed values?
 - Should `comment` be required for all variables?
-- Should the Variables widget be controlled by Card Selector?
